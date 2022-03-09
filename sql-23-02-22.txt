@@ -1,0 +1,508 @@
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 8.0.28 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use mickey
+Database changed
+mysql> create table table_1(sno int,name varchar(15)) values (1,2,3,4) (mayank , kl , ansm , ms);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(1,2,3,4) (mayank , kl , ansm , ms)' at line 1
+mysql> create table table_1(sno int,name varchar(15));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> alter table table_1 add primary key (sno);
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into table_1 (sno,name) Values (1,mayank)
+    -> ;
+ERROR 1054 (42S22): Unknown column 'mayank' in 'field list'
+mysql> insert into table_1 (sno,name) Values (1,mayank);
+ERROR 1054 (42S22): Unknown column 'mayank' in 'field list'
+mysql> insert into table_1 (sno,name) Values (1,mayank);
+ERROR 1054 (42S22): Unknown column 'mayank' in 'field list'
+mysql> insert into table_1 (sno,name) Values (1,2,3) (vame,same,);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(vame,same,)' at line 1
+mysql> insert into table_1 (sno,name) Values (1,2,3) (vame,same);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(vame,same)' at line 1
+mysql> insert into table_1 (sno,name) Values (1,mayank);
+ERROR 1054 (42S22): Unknown column 'mayank' in 'field list'
+mysql> insert into table_1 (sno,name) Values (1 , mayank);
+ERROR 1054 (42S22): Unknown column 'mayank' in 'field list'
+mysql> insert into table_1 (sno , name) Values (1 , mayank);
+ERROR 1054 (42S22): Unknown column 'mayank' in 'field list'
+mysql> insert into table_1 Values (1 , mayank);
+ERROR 1054 (42S22): Unknown column 'mayank' in 'field list'
+mysql> insert into table_1 Values (1 , mayank1);
+ERROR 1054 (42S22): Unknown column 'mayank1' in 'field list'
+mysql> insert into table_1 Values (1 , mayank);
+ERROR 1054 (42S22): Unknown column 'mayank' in 'field list'
+mysql> desc student;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| rn    | int         | YES  |     | NULL    |       |
+| nm    | varchar(20) | YES  |     | NULL    |       |
+| sem   | int         | YES  |     | NULL    |       |
+| ph_no | int         | YES  |     | NULL    |       |
+| email | varchar(20) | YES  |     | NULL    |       |
+| marks | int         | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+6 rows in set (0.02 sec)
+
+mysql> alter table student add primary key (rn);
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| rn    | int         | NO   | PRI | NULL    |       |
+| nm    | varchar(20) | YES  |     | NULL    |       |
+| sem   | int         | YES  |     | NULL    |       |
+| ph_no | int         | YES  |     | NULL    |       |
+| email | varchar(20) | YES  |     | NULL    |       |
+| marks | int         | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> desc faculty;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| sno     | int         | YES  |     | NULL    |       |
+| name    | varchar(10) | YES  |     | NULL    |       |
+| email   | varchar(15) | YES  |     | NULL    |       |
+| subject | varchar(15) | YES  |     | NULL    |       |
+| phone   | bigint      | YES  |     | NULL    |       |
+| sem     | int         | YES  |     | 4       |       |
++---------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> alter table student add foreign key (sno) references student(rn);
+ERROR 1072 (42000): Key column 'sno' doesn't exist in table
+mysql> alter table student add foreign key (sno) references student(rn);
+ERROR 1072 (42000): Key column 'sno' doesn't exist in table
+mysql> alter table faculty add foreign key (sno) references student(rn);
+Query OK, 10 rows affected (0.08 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> insert into table_1 values (1,'mayank') (2,'ms');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(2,'ms')' at line 1
+mysql> insert into table_1 values (1,'mayank');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into table_1 values (1,'mayank') , (2,'ms');
+ERROR 1062 (23000): Duplicate entry '1' for key 'table_1.PRIMARY'
+mysql> insert into table_1 values (1,'mayank') , (2,'mickey');
+ERROR 1062 (23000): Duplicate entry '1' for key 'table_1.PRIMARY'
+mysql> insert into table_1 values (2,'mayank') , (3,'mickey18');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into table_1 values (4,'mayank') , (5,'mickeyruni');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into table_1 values (6,'mynk') , (7,'mickeyruni18');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from table_1;
++-----+--------------+
+| sno | name         |
++-----+--------------+
+|   1 | mayank       |
+|   2 | mayank       |
+|   3 | mickey18     |
+|   4 | mayank       |
+|   5 | mickeyruni   |
+|   6 | mynk         |
+|   7 | mickeyruni18 |
++-----+--------------+
+7 rows in set (0.04 sec)
+
+mysql> update table_1 set name=mayankrunija where sno=2;
+ERROR 1054 (42S22): Unknown column 'mayankrunija' in 'field list'
+mysql> update table_1 set name=mayankrunija where sno=2;
+ERROR 1054 (42S22): Unknown column 'mayankrunija' in 'field list'
+mysql> update table_1 set name='mayankrunija' where sno=2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update table_1 set name='mynkrunija' where sno=4;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from table_1;
++-----+--------------+
+| sno | name         |
++-----+--------------+
+|   1 | mayank       |
+|   2 | mayankrunija |
+|   3 | mickey18     |
+|   4 | mynkrunija   |
+|   5 | mickeyruni   |
+|   6 | mynk         |
+|   7 | mickeyruni18 |
++-----+--------------+
+7 rows in set (0.00 sec)
+
+mysql> create table table_2(st-id int,st-name varchar(15));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-id int,st-name varchar(15))' at line 1
+mysql> create table table_2(st_id int,st_name varchar(15));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select * from table_1 order by sno dsc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'dsc' at line 1
+mysql> select * from table_1 order by sno dsc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'dsc' at line 1
+mysql> select * from table_1 order by sno dsc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'dsc' at line 1
+mysql> select * from table_1 order by sno asc;
++-----+--------------+
+| sno | name         |
++-----+--------------+
+|   1 | mayank       |
+|   2 | mayankrunija |
+|   3 | mickey18     |
+|   4 | mynkrunija   |
+|   5 | mickeyruni   |
+|   6 | mynk         |
+|   7 | mickeyruni18 |
++-----+--------------+
+7 rows in set (0.01 sec)
+
+mysql> select * from table_1 order by sno des;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'des' at line 1
+mysql> select * from table_1 order by sno desc;
++-----+--------------+
+| sno | name         |
++-----+--------------+
+|   7 | mickeyruni18 |
+|   6 | mynk         |
+|   5 | mickeyruni   |
+|   4 | mynkrunija   |
+|   3 | mickey18     |
+|   2 | mayankrunija |
+|   1 | mayank       |
++-----+--------------+
+7 rows in set (0.00 sec)
+
+mysql> insert into table_2 values (11,aditya) , (12,aftab) , (13,akhil) , (14,mayank) , (15,kashish);
+ERROR 1054 (42S22): Unknown column 'aditya' in 'field list'
+mysql> insert into table_2 values (11,'aditya') , (12,'aftab') , (13,'akhil') , (14,'mayank') , (15,'kashish');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> insert into table_2 values (16,'kanika') , (17,'poornima') , (18,'ansm');
+Query OK, 3 rows affected (0.04 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from table_2;
++-------+----------+
+| st_id | st_name  |
++-------+----------+
+|    11 | aditya   |
+|    12 | aftab    |
+|    13 | akhil    |
+|    14 | mayank   |
+|    15 | kashish  |
+|    16 | kanika   |
+|    17 | poornima |
+|    18 | ansm     |
++-------+----------+
+8 rows in set (0.00 sec)
+
+mysql> insert into table_2 values (10,'aman');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from table_2;
++-------+----------+
+| st_id | st_name  |
++-------+----------+
+|    11 | aditya   |
+|    12 | aftab    |
+|    13 | akhil    |
+|    14 | mayank   |
+|    15 | kashish  |
+|    16 | kanika   |
+|    17 | poornima |
+|    18 | ansm     |
+|    10 | aman     |
++-------+----------+
+9 rows in set (0.01 sec)
+
+mysql> alter table table_1 add primary key (sno);
+ERROR 1068 (42000): Multiple primary key defined
+mysql> insert into table_1 values (10,'aman');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from table_1;
++-----+--------------+
+| sno | name         |
++-----+--------------+
+|   1 | mayank       |
+|   2 | mayankrunija |
+|   3 | mickey18     |
+|   4 | mynkrunija   |
+|   5 | mickeyruni   |
+|   6 | mynk         |
+|   7 | mickeyruni18 |
+|  10 | aman         |
++-----+--------------+
+8 rows in set (0.00 sec)
+
+mysql> insert into table_1 values (8,'aamaan');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from table_1;
++-----+--------------+
+| sno | name         |
++-----+--------------+
+|   1 | mayank       |
+|   2 | mayankrunija |
+|   3 | mickey18     |
+|   4 | mynkrunija   |
+|   5 | mickeyruni   |
+|   6 | mynk         |
+|   7 | mickeyruni18 |
+|   8 | aamaan       |
+|  10 | aman         |
++-----+--------------+
+9 rows in set (0.00 sec)
+
+mysql> alter table table_2 add foreign key (st_id) references student(sno);
+ERROR 3734 (HY000): Failed to add the foreign key constraint. Missing column 'sno' for constraint 'table_2_ibfk_1' in the referenced table 'student'
+mysql> alter table table_2 add foreign key (st_id) references tanble_1(sno);
+ERROR 1824 (HY000): Failed to open the referenced table 'tanble_1'
+mysql> alter table table_2 add foreign key (st_id) references table_1(sno);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`mickey`.`#sql-171c_a`, CONSTRAINT `table_2_ibfk_1` FOREIGN KEY (`st_id`) REFERENCES `table_1` (`sno`))
+mysql> select top 3 table;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '3 table' at line 1
+mysql> select limit 3 table;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'limit 3 table' at line 1
+mysql> select sno from table_1 limit 3;
++-----+
+| sno |
++-----+
+|   1 |
+|   2 |
+|   3 |
++-----+
+3 rows in set (0.01 sec)
+
+mysql> select from table_1 limit 3;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from table_1 limit 3' at line 1
+mysql> select *from table_1 limit 3;
++-----+--------------+
+| sno | name         |
++-----+--------------+
+|   1 | mayank       |
+|   2 | mayankrunija |
+|   3 | mickey18     |
++-----+--------------+
+3 rows in set (0.00 sec)
+
+mysql> select *from table_1 top 3;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '3' at line 1
+mysql> select *from table_1 limit 3;
++-----+--------------+
+| sno | name         |
++-----+--------------+
+|   1 | mayank       |
+|   2 | mayankrunija |
+|   3 | mickey18     |
++-----+--------------+
+3 rows in set (0.00 sec)
+
+mysql> select *from table_1 where sno=3 limit 3;
++-----+----------+
+| sno | name     |
++-----+----------+
+|   3 | mickey18 |
++-----+----------+
+1 row in set (0.00 sec)
+
+mysql> select *from table_1 where name=m limit 3;
+ERROR 1054 (42S22): Unknown column 'm' in 'where clause'
+mysql> alter tanle_1 add city varchar(10);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'tanle_1 add city varchar(10)' at line 1
+mysql> alter table table_1 add city varchar(10);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into table_1 (city) values (indore) ;
+ERROR 1054 (42S22): Unknown column 'indore' in 'field list'
+mysql> update table_1 set city='indore' where sno=1;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update table_1 set city='indore' where sno=2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update table_1 set city='indore' where sno=3;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update table_1 set city='indore' where sno=4;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update table_1 set city='dewas' where sno=5;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update table_1 set city='dewas' where sno=6;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update table_1 set city='ujjain' where sno=7;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from table_1;
++-----+--------------+--------+
+| sno | name         | city   |
++-----+--------------+--------+
+|   1 | mayank       | indore |
+|   2 | mayankrunija | indore |
+|   3 | mickey18     | indore |
+|   4 | mynkrunija   | indore |
+|   5 | mickeyruni   | dewas  |
+|   6 | mynk         | dewas  |
+|   7 | mickeyruni18 | ujjain |
+|   8 | aamaan       | NULL   |
+|  10 | aman         | NULL   |
++-----+--------------+--------+
+9 rows in set (0.00 sec)
+
+mysql> update table_1 set city='ujjain' where sno=8;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update table_1 set city='ujjain' where sno=10;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from table_1;
++-----+--------------+--------+
+| sno | name         | city   |
++-----+--------------+--------+
+|   1 | mayank       | indore |
+|   2 | mayankrunija | indore |
+|   3 | mickey18     | indore |
+|   4 | mynkrunija   | indore |
+|   5 | mickeyruni   | dewas  |
+|   6 | mynk         | dewas  |
+|   7 | mickeyruni18 | ujjain |
+|   8 | aamaan       | ujjain |
+|  10 | aman         | ujjain |
++-----+--------------+--------+
+9 rows in set (0.00 sec)
+
+mysql> alter table table_1 add salary int;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> update table_1 set salary=5000 where sno=1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update table_1 set salary=5500 where sno=2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update table_1 set salary=4500 where sno=3;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update table_1 set salary=6500 where sno=4;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update table_1 set salary=6000 where sno=5;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update table_1 set salary=7500 where sno=6;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update table_1 set salary=8500 where sno=7;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update table_1 set salary=8000 where sno=8;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update table_1 set salary=9000 where sno=10;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from table_1;
++-----+--------------+--------+--------+
+| sno | name         | city   | salary |
++-----+--------------+--------+--------+
+|   1 | mayank       | indore |   5000 |
+|   2 | mayankrunija | indore |   5500 |
+|   3 | mickey18     | indore |   4500 |
+|   4 | mynkrunija   | indore |   6500 |
+|   5 | mickeyruni   | dewas  |   6000 |
+|   6 | mynk         | dewas  |   7500 |
+|   7 | mickeyruni18 | ujjain |   8500 |
+|   8 | aamaan       | ujjain |   8000 |
+|  10 | aman         | ujjain |   9000 |
++-----+--------------+--------+--------+
+9 rows in set (0.00 sec)
+
+mysql> select * ,min(salary) from table_1;
++------+--------+--------+--------+-------------+
+| sno  | name   | city   | salary | min(salary) |
++------+--------+--------+--------+-------------+
+|    1 | mayank | indore |   5000 |        4500 |
++------+--------+--------+--------+-------------+
+1 row in set (0.01 sec)
+
+mysql> select * ,max(salary) from table_1;
++------+--------+--------+--------+-------------+
+| sno  | name   | city   | salary | max(salary) |
++------+--------+--------+--------+-------------+
+|    1 | mayank | indore |   5000 |        9000 |
++------+--------+--------+--------+-------------+
+1 row in set (0.00 sec)
+
+mysql> select * ,max(salary) from table_1 where salary=max;
+ERROR 1054 (42S22): Unknown column 'max' in 'where clause'
+mysql> select * ,max(salary)  where salary=max from table_1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from table_1' at line 1
+mysql> select * ,max(salary)  from table_1;
++------+--------+--------+--------+-------------+
+| sno  | name   | city   | salary | max(salary) |
++------+--------+--------+--------+-------------+
+|    1 | mayank | indore |   5000 |        9000 |
++------+--------+--------+--------+-------------+
+1 row in set (0.00 sec)
+
+mysql> select * ,max(salary) where sno=10 from table_1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from table_1' at line 1
+mysql> select * from table_1 where salary=(select min(salary) from  table_1);
++-----+----------+--------+--------+
+| sno | name     | city   | salary |
++-----+----------+--------+--------+
+|   3 | mickey18 | indore |   4500 |
++-----+----------+--------+--------+
+1 row in set (0.01 sec)
+
+mysql>
