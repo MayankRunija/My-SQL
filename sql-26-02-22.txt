@@ -1,0 +1,802 @@
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 20
+Server version: 8.0.28 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database college;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use college;
+Database changed
+mysql> drop database college;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mickey             |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> create database company;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use company;
+Database changed
+mysql> create table location company;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'company' at line 1
+mysql> create table location ;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table location;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table location (loc_id int),(regional_group) primary key(loc_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',(regional_group) primary key(loc_id)' at line 1
+mysql> create table location (loc_id int),(regional_group varchar(10)) primary key(loc_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',(regional_group varchar(10)) primary key(loc_id)' at line 1
+mysql> create table location (loc_id int) , (regional_group varchar(10)) primary key(loc_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', (regional_group varchar(10)) primary key(loc_id)' at line 1
+mysql> create table location (loc_id int) , (regional_group varchar(10)) primary key (loc_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', (regional_group varchar(10)) primary key (loc_id)' at line 1
+mysql> create table location (loc_id int) , (regional_group varchar(10));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', (regional_group varchar(10))' at line 1
+mysql> create table location column (loc_id int) , (regional_group varchar(10));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'column (loc_id int) , (regional_group varchar(10))' at line 1
+mysql> create table location column (loc_id int , regional_group varchar(10)) primary key(loc_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'column (loc_id int , regional_group varchar(10)) primary key(loc_id)' at line 1
+mysql> create table location column (loc_id int , regional_group varchar(10));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'column (loc_id int , regional_group varchar(10))' at line 1
+mysql> create table location (loc_id int , regional_group varchar(10)) primary key(loc_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key(loc_id)' at line 1
+mysql> create table location (loc_id int , regional_group varchar(10)) primary key (loc_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key (loc_id)' at line 1
+mysql> create table location (loc_id int , regional_group varchar(10));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> create table department (dep_id int , name varchar(10), loc_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> create table department (dep_id int , name varchar(10), loc_id int);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create table job (job_id int , fuction varchar(10));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> show tables;
++-------------------+
+| Tables_in_company |
++-------------------+
+| department        |
+| job               |
+| location          |
++-------------------+
+3 rows in set (0.02 sec)
+
+mysql> alter table location add primary key loc_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> alter table location add primary key (loc_id);
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into location values (122,'new_york') , (123,'dallas') , (124,'chicago') , (167,'boston');
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from location;
++--------+----------------+
+| loc_id | regional_group |
++--------+----------------+
+|    122 | new_york       |
+|    123 | dallas         |
+|    124 | chicago        |
+|    167 | boston         |
++--------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table department add foreign key (loc_id) references location(loc_id);
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into location values (10,'accounting') , (20,'research') , (30,'sales') , (40,'operations');
+Query OK, 4 rows affected (0.02 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from depatmentj;
+ERROR 1146 (42S02): Table 'company.depatmentj' doesn't exist
+mysql> select * from depatment;
+ERROR 1146 (42S02): Table 'company.depatment' doesn't exist
+mysql> insert into department values (10,'accounting') , (20,'research') , (30,'sales') , (40,'operations');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> select * from location;
++--------+----------------+
+| loc_id | regional_group |
++--------+----------------+
+|     10 | accounting     |
+|     20 | research       |
+|     30 | sales          |
+|     40 | operations     |
+|    122 | new_york       |
+|    123 | dallas         |
+|    124 | chicago        |
+|    167 | boston         |
++--------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> delete from location loc_id=10;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '=10' at line 1
+mysql> delete from location where loc_id=10;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> delete from location where loc_id=20;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> delete from location where loc_id=30;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> delete from location where loc_id=40;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from location;
++--------+----------------+
+| loc_id | regional_group |
++--------+----------------+
+|    122 | new_york       |
+|    123 | dallas         |
+|    124 | chicago        |
+|    167 | boston         |
++--------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into department values (10,'accounting',122) , (20,'research',123) , (30,'sales',124) , (40,'operations,167');
+ERROR 1136 (21S01): Column count doesn't match value count at row 4
+mysql> insert into department values (10,'accounting',122) , (20,'research',123) , (30,'sales',124) , (40,'operations',167');
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 20
+Server version: 8.0.28 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database college;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use college;
+Database changed
+mysql> drop database college;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mickey             |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> create database company;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use company;
+Database changed
+mysql> create table location company;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'company' at line 1
+mysql> create table location ;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table location;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table location (loc_id int),(regional_group) primary key(loc_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',(regional_group) primary key(loc_id)' at line 1
+mysql> create table location (loc_id int),(regional_group varchar(10)) primary key(loc_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',(regional_group varchar(10)) primary key(loc_id)' at line 1
+mysql> create table location (loc_id int) , (regional_group varchar(10)) primary key(loc_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', (regional_group varchar(10)) primary key(loc_id)' at line 1
+mysql> create table location (loc_id int) , (regional_group varchar(10)) primary key (loc_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', (regional_group varchar(10)) primary key (loc_id)' at line 1
+mysql> create table location (loc_id int) , (regional_group varchar(10));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', (regional_group varchar(10))' at line 1
+mysql> create table location column (loc_id int) , (regional_group varchar(10));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'column (loc_id int) , (regional_group varchar(10))' at line 1
+mysql> create table location column (loc_id int , regional_group varchar(10)) primary key(loc_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'column (loc_id int , regional_group varchar(10)) primary key(loc_id)' at line 1
+mysql> create table location column (loc_id int , regional_group varchar(10));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'column (loc_id int , regional_group varchar(10))' at line 1
+mysql> create table location (loc_id int , regional_group varchar(10)) primary key(loc_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key(loc_id)' at line 1
+mysql> create table location (loc_id int , regional_group varchar(10)) primary key (loc_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key (loc_id)' at line 1
+mysql> create table location (loc_id int , regional_group varchar(10));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> create table department (dep_id int , name varchar(10), loc_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> create table department (dep_id int , name varchar(10), loc_id int);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create table job (job_id int , fuction varchar(10));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> show tables;
++-------------------+
+| Tables_in_company |
++-------------------+
+| department        |
+| job               |
+| location          |
++-------------------+
+3 rows in set (0.02 sec)
+
+mysql> alter table location add primary key loc_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> alter table location add primary key (loc_id);
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into location values (122,'new_york') , (123,'dallas') , (124,'chicago') , (167,'boston');
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from location;
++--------+----------------+
+| loc_id | regional_group |
++--------+----------------+
+|    122 | new_york       |
+|    123 | dallas         |
+|    124 | chicago        |
+|    167 | boston         |
++--------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table department add foreign key (loc_id) references location(loc_id);
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into location values (10,'accounting') , (20,'research') , (30,'sales') , (40,'operations');
+Query OK, 4 rows affected (0.02 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from depatmentj;
+ERROR 1146 (42S02): Table 'company.depatmentj' doesn't exist
+mysql> select * from depatment;
+ERROR 1146 (42S02): Table 'company.depatment' doesn't exist
+mysql> insert into department values (10,'accounting') , (20,'research') , (30,'sales') , (40,'operations');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> select * from location;
++--------+----------------+
+| loc_id | regional_group |
++--------+----------------+
+|     10 | accounting     |
+|     20 | research       |
+|     30 | sales          |
+|     40 | operations     |
+|    122 | new_york       |
+|    123 | dallas         |
+|    124 | chicago        |
+|    167 | boston         |
++--------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> delete from location loc_id=10;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '=10' at line 1
+mysql> delete from location where loc_id=10;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> delete from location where loc_id=20;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> delete from location where loc_id=30;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> delete from location where loc_id=40;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from location;
++--------+----------------+
+| loc_id | regional_group |
++--------+----------------+
+|    122 | new_york       |
+|    123 | dallas         |
+|    124 | chicago        |
+|    167 | boston         |
++--------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into department values (10,'accounting',122) , (20,'research',123) , (30,'sales',124) , (40,'operations,167');
+ERROR 1136 (21S01): Column count doesn't match value count at row 4
+mysql> insert into department values (10,'accounting',122) , (20,'research',123) , (30,'sales',124) , (40,'operations',167');
+    '> ;
+    '> ;
+    '> select * from location;
+    '> select * from location;
+    '> insert into department values (10,'accounting',122) , (20,'research',123) , (30,'sales',124) , (40,'operations',167');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '');
+;
+;
+select * from location;
+select * from location;
+insert into department v' at line 1
+mysql> select * from location;
++--------+----------------+
+| loc_id | regional_group |
++--------+----------------+
+|    122 | new_york       |
+|    123 | dallas         |
+|    124 | chicago        |
+|    167 | boston         |
++--------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from department;
+Empty set (0.01 sec)
+
+mysql> insert into department values (10,'accounting',122) , (20,'research',123) , (30,'sales',124) , (40,'operations',167);
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> insert into job values (667,'clerk') , (668,'staff') , (669,'analyst') , (670,'salesperson') , (671,'manager') , (672,'president');
+ERROR 1406 (22001): Data too long for column 'fuction' at row 4
+mysql> insert into job values (667,'clerk') , (668,'staff') , (669,'analyst') , (670,'salesprson') , (671,'manager') , (672,'president');
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from department;
++--------+------------+--------+
+| dep_id | name       | loc_id |
++--------+------------+--------+
+|     10 | accounting |    122 |
+|     20 | research   |    123 |
+|     30 | sales      |    124 |
+|     40 | operations |    167 |
++--------+------------+--------+
+4 rows in set (0.01 sec)
+
+mysql> select * from job;
++--------+------------+
+| job_id | fuction    |
++--------+------------+
+|    667 | clerk      |
+|    668 | staff      |
+|    669 | analyst    |
+|    670 | salesprson |
+|    671 | manager    |
+|    672 | president  |
++--------+------------+
+6 rows in set (0.00 sec)
+
+mysql> create table employee (emp_id int , l_name varchar(20) ,f_name varchar(20) ,m_name varchar(20), job_id int, manager_id int,hire_date date ,salary int, comm int , dep_id int);
+Query OK, 0 rows affected (0.05 sec)
+
+mysql>
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.28 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use company;
+Database changed
+mysql> select * from employee;
+Empty set (0.03 sec)
+
+mysql> show tables;
++-------------------+
+| Tables_in_company |
++-------------------+
+| department        |
+| employee          |
+| job               |
+| location          |
++-------------------+
+4 rows in set (0.04 sec)
+
+mysql> drop table employee;
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> desc department;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| dep_id | int         | YES  |     | NULL    |       |
+| name   | varchar(10) | YES  |     | NULL    |       |
+| loc_id | int         | YES  | MUL | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.05 sec)
+
+mysql> desc job;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| job_id  | int         | YES  |     | NULL    |       |
+| fuction | varchar(10) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> desc location;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| loc_id         | int         | NO   | PRI | NULL    |       |
+| regional_group | varchar(10) | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> alter table department add primary key (dep_id);
+Query OK, 0 rows affected (0.12 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table job add primary key (job_id);
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc department;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| dep_id | int         | NO   | PRI | NULL    |       |
+| name   | varchar(10) | YES  |     | NULL    |       |
+| loc_id | int         | YES  | MUL | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> desc job;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| job_id  | int         | NO   | PRI | NULL    |       |
+| fuction | varchar(10) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> desc location;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| loc_id         | int         | NO   | PRI | NULL    |       |
+| regional_group | varchar(10) | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> create table employee (emp_id int,l_name varchar(10),f_name varchar(10),m_name varchar(10),job_id int, manager_id int,hire_date date,salary int,comm int, dep_id int) foreign key (job id) references job(job_id) foreign key (dep_id) references department(dep_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign key (job id) references job(job_id) foreign key (dep_id) references depa' at line 1
+mysql> create table employee (emp_id int,l_name varchar(10),f_name varchar(10),m_name varchar(10),job_id int, manager_id int,hire_date date,salary int,comm int, dep_id int) ;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> drop table employee;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create table employee (emp_id int,l_name varchar(10),f_name varchar(10),m_name varchar(10),job_id int, manager_id int,hire_date date,salary int,comm int, dep_id int) foreign key (job id) references job(job_id) , foreign key (dep_id) references department(dep_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign key (job id) references job(job_id) , foreign key (dep_id) references de' at line 1
+mysql> create table employee (emp_id int,l_name varchar(10),f_name varchar(10),m_name varchar(10),job_id int, manager_id int,hire_date date,salary int,comm int, dep_id int), foreign key (job id) references job(job_id) , foreign key (dep_id) references department(dep_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', foreign key (job id) references job(job_id) , foreign key (dep_id) references ' at line 1
+mysql> create table employee (emp_id int,l_name varchar(10),f_name varchar(10),m_name varchar(10),job_id int, manager_id int,hire_date date,salary int,comm int, dep_id int), foreign key (job_id) references job(job_id) , foreign key (dep_id) references department(dep_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', foreign key (job_id) references job(job_id) , foreign key (dep_id) references ' at line 1
+mysql> create table employee (emp_id int,l_name varchar(10),f_name varchar(10),m_name varchar(10),job_id int, manager_id int,hire_date date,salary int,comm int, dep_id int) foreign key (job_id) references job(job_id) foreign key (dep_id) references department(dep_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign key (job_id) references job(job_id) foreign key (dep_id) references depa' at line 1
+mysql> create table employee (emp_id int,l_name varchar(10),f_name varchar(10),m_name varchar(10),job_id int, manager_id int,hire_date date,salary int,comm int, dep_id int) foreign key (job_id) references job(job_id) ,foreign key (dep_id) references department(dep_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign key (job_id) references job(job_id) ,foreign key (dep_id) references dep' at line 1
+mysql> create table employee (emp_id int,l_name varchar(10),f_name varchar(10),m_name varchar(10),job_id int, manager_id int,hire_date date,salary int,comm int, dep_id int foreign key (job_id) references job(job_id) ,foreign key (dep_id) references department(dep_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign key (job_id) references job(job_id) ,foreign key (dep_id) references dep' at line 1
+mysql> create table employee (emp_id int,l_name varchar(10),f_name varchar(10),m_name varchar(10),job_id int, manager_id int,hire_date date,salary int,comm int, dep_id int foreign key (dep_id) references department(dep_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign key (dep_id) references department(dep_id))' at line 1
+mysql> create table employee (emp_id int,l_name varchar(10),f_name varchar(10),m_name varchar(10),job_id int, manager_id int,hire_date date,salary int,comm int, dep_id int foreign key references department(dep_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign key references department(dep_id))' at line 1
+mysql> create table employee (emp_id int,l_name varchar(10),f_name varchar(10),m_name varchar(10),job_id int, manager_id int,hire_date date,salary int,comm int, dep_id int foreign key references department(dep_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign key references department(dep_id))' at line 1
+mysql> create table employee (emp_id int,l_name varchar(10),f_name varchar(10),m_name varchar(10),job_id int, manager_id int,hire_date date,salary int,comm int, dep_id int foreign key references department(dep_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign key references department(dep_id))' at line 1
+mysql> create table employee (emp_id int,l_name varchar(10),f_name varchar(10),m_name varchar(10),job_id int, manager_id int,hire_date date,salary int,comm int, dep_id int );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> alter table employee add foreign key (job_id) references job(job_id);
+Query OK, 0 rows affected (0.12 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table employee add foreign key (dep_id) references department(dep_id);
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc employee;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| emp_id     | int         | YES  |     | NULL    |       |
+| l_name     | varchar(10) | YES  |     | NULL    |       |
+| f_name     | varchar(10) | YES  |     | NULL    |       |
+| m_name     | varchar(10) | YES  |     | NULL    |       |
+| job_id     | int         | YES  | MUL | NULL    |       |
+| manager_id | int         | YES  |     | NULL    |       |
+| hire_date  | date        | YES  |     | NULL    |       |
+| salary     | int         | YES  |     | NULL    |       |
+| comm       | int         | YES  |     | NULL    |       |
+| dep_id     | int         | YES  | MUL | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+10 rows in set (0.01 sec)
+
+mysql> insert into employee values (7369,'smith','jhon','Q',667,7902,17-dec-84,800,null,20);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'dec-84,800,null,20)' at line 1
+mysql> insert into employee values (7369,'smith','jhon','Q',667,7902,'17-dec-84',800,null,20);
+ERROR 1292 (22007): Incorrect date value: '17-dec-84' for column 'hire_date' at row 1
+mysql> insert into employee values (7369,'smith','jhon','Q',667,7902,17-12-84,800,null,20);
+ERROR 1292 (22007): Incorrect date value: '-79' for column 'hire_date' at row 1
+mysql> insert into employee values (7369,'smith','jhon','Q',667,7902,84-12-17,800,null,20);
+ERROR 1292 (22007): Incorrect date value: '55' for column 'hire_date' at row 1
+mysql> insert into employee values (7369,'smith','jhon','Q',667,7902,'84-12-17',800,null,20);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values (7499,'allen','kevin','J',670,7698,'85-feb-20',1600,300,30);
+ERROR 1292 (22007): Incorrect date value: '85-feb-20' for column 'hire_date' at row 1
+mysql> insert into employee values (7499,'allen','kevin','J',670,7698,'85-02-20',1600,300,30);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into employee values (7505,'doyle','jean','K',671,7839,'85-04-04',2850,null,30);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into employee values (7506,'dennis','lynn','S',671,7839,'85-05-04',2750,null,30);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into employee values (7507,'baker','leslie','D',671,7839,'85-06-10',2200,null,40);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values (7521,'wark','cynthla','D',670,7698,'85-02-22',1250,null,40);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'employee' at line 1
+mysql> select * from employee;
++--------+--------+---------+--------+--------+------------+------------+--------+------+--------+
+| emp_id | l_name | f_name  | m_name | job_id | manager_id | hire_date  | salary | comm | dep_id |
++--------+--------+---------+--------+--------+------------+------------+--------+------+--------+
+|   7369 | smith  | jhon    | Q      |    667 |       7902 | 1984-12-17 |    800 | NULL |     20 |
+|   7499 | allen  | kevin   | J      |    670 |       7698 | 1985-02-20 |   1600 |  300 |     30 |
+|   7505 | doyle  | jean    | K      |    671 |       7839 | 1985-04-04 |   2850 | NULL |     30 |
+|   7506 | dennis | lynn    | S      |    671 |       7839 | 1985-05-04 |   2750 | NULL |     30 |
+|   7507 | baker  | leslie  | D      |    671 |       7839 | 1985-06-10 |   2200 | NULL |     40 |
+|   7521 | wark   | cynthla | D      |    670 |       7698 | 1985-02-22 |   1250 | NULL |     40 |
++--------+--------+---------+--------+--------+------------+------------+--------+------+--------+
+6 rows in set (0.04 sec)
+
+mysql> select * from department;
++--------+------------+--------+
+| dep_id | name       | loc_id |
++--------+------------+--------+
+|     10 | accounting |    122 |
+|     20 | research   |    123 |
+|     30 | sales      |    124 |
+|     40 | operations |    167 |
++--------+------------+--------+
+4 rows in set (0.02 sec)
+
+mysql> select * from job;
++--------+------------+
+| job_id | fuction    |
++--------+------------+
+|    667 | clerk      |
+|    668 | staff      |
+|    669 | analyst    |
+|    670 | salesprson |
+|    671 | manager    |
+|    672 | president  |
++--------+------------+
+6 rows in set (0.01 sec)
+
+mysql> select * from location;
++--------+----------------+
+| loc_id | regional_group |
++--------+----------------+
+|    122 | new_york       |
+|    123 | dallas         |
+|    124 | chicago        |
+|    167 | boston         |
++--------+----------------+
+4 rows in set (0.02 sec)
+
+mysql> select f_name,l_name,salary,comm from employee;
++---------+--------+--------+------+
+| f_name  | l_name | salary | comm |
++---------+--------+--------+------+
+| jhon    | smith  |    800 | NULL |
+| kevin   | allen  |   1600 |  300 |
+| jean    | doyle  |   2850 | NULL |
+| lynn    | dennis |   2750 | NULL |
+| leslie  | baker  |   2200 | NULL |
+| cynthla | wark   |   1250 | NULL |
++---------+--------+--------+------+
+6 rows in set (0.00 sec)
+
+mysql> select f_name,_name,l_name,msalary from employee;
+ERROR 1054 (42S22): Unknown column '_name' in 'field list'
+mysql> select f_name,_name,l_name,salary from employee;
+ERROR 1054 (42S22): Unknown column '_name' in 'field list'
+mysql> select f_name,m_name,l_name,salary from employee;
++---------+--------+--------+--------+
+| f_name  | m_name | l_name | salary |
++---------+--------+--------+--------+
+| jhon    | Q      | smith  |    800 |
+| kevin   | J      | allen  |   1600 |
+| jean    | K      | doyle  |   2850 |
+| lynn    | S      | dennis |   2750 |
+| leslie  | D      | baker  |   2200 |
+| cynthla | D      | wark   |   1250 |
++---------+--------+--------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select emp_id,l_name,dep_id from employee;
++--------+--------+--------+
+| emp_id | l_name | dep_id |
++--------+--------+--------+
+|   7369 | smith  |     20 |
+|   7499 | allen  |     30 |
+|   7505 | doyle  |     30 |
+|   7506 | dennis |     30 |
+|   7507 | baker  |     40 |
+|   7521 | wark   |     40 |
++--------+--------+--------+
+6 rows in set (0.00 sec)
+
+mysql> alter table employee modify emp_id=ID_of_the_employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '=ID_of_the_employee' at line 1
+mysql> alter table employee change emp_id ID_of_the_employee varchar(20);
+Query OK, 6 rows affected (0.07 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee;
++--------------------+--------+---------+--------+--------+------------+------------+--------+------+--------+
+| ID_of_the_employee | l_name | f_name  | m_name | job_id | manager_id | hire_date  | salary | comm | dep_id |
++--------------------+--------+---------+--------+--------+------------+------------+--------+------+--------+
+| 7369               | smith  | jhon    | Q      |    667 |       7902 | 1984-12-17 |    800 | NULL |     20 |
+| 7499               | allen  | kevin   | J      |    670 |       7698 | 1985-02-20 |   1600 |  300 |     30 |
+| 7505               | doyle  | jean    | K      |    671 |       7839 | 1985-04-04 |   2850 | NULL |     30 |
+| 7506               | dennis | lynn    | S      |    671 |       7839 | 1985-05-04 |   2750 | NULL |     30 |
+| 7507               | baker  | leslie  | D      |    671 |       7839 | 1985-06-10 |   2200 | NULL |     40 |
+| 7521               | wark   | cynthla | D      |    670 |       7698 | 1985-02-22 |   1250 | NULL |     40 |
++--------------------+--------+---------+--------+--------+------------+------------+--------+------+--------+
+6 rows in set (0.00 sec)
+
+mysql> alter table employee change l_name Name_of_the_employee varchar(20);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.28 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> desc employee;
+ERROR 1046 (3D000): No database selected
+mysql> use mickey;
+Database changed
+mysql> use company;
+Database changed
+mysql> desc employee;
++----------------------+-------------+------+-----+---------+-------+
+| Field                | Type        | Null | Key | Default | Extra |
++----------------------+-------------+------+-----+---------+-------+
+| ID_of_the_employee   | varchar(20) | YES  |     | NULL    |       |
+| Name_of_the_employee | varchar(20) | YES  |     | NULL    |       |
+| f_name               | varchar(10) | YES  |     | NULL    |       |
+| m_name               | varchar(10) | YES  |     | NULL    |       |
+| job_id               | int         | YES  | MUL | NULL    |       |
+| manager_id           | int         | YES  |     | NULL    |       |
+| hire_date            | date        | YES  |     | NULL    |       |
+| salary               | int         | YES  |     | NULL    |       |
+| comm                 | int         | YES  |     | NULL    |       |
+| dep_id               | int         | YES  | MUL | NULL    |       |
++----------------------+-------------+------+-----+---------+-------+
+10 rows in set (0.01 sec)
+
+mysql> alter table employee drop foreign key employee_ibfk_2;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table employee change dep_id department_ID int;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table employee add foreign key (department_ID) references department(dep_id);
+Query OK, 6 rows affected (0.10 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee;
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name  | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| 7369               | smith                | jhon    | Q      |    667 |       7902 | 1984-12-17 |    800 | NULL |            20 |
+| 7499               | allen                | kevin   | J      |    670 |       7698 | 1985-02-20 |   1600 |  300 |            30 |
+| 7505               | doyle                | jean    | K      |    671 |       7839 | 1985-04-04 |   2850 | NULL |            30 |
+| 7506               | dennis               | lynn    | S      |    671 |       7839 | 1985-05-04 |   2750 | NULL |            30 |
+| 7507               | baker                | leslie  | D      |    671 |       7839 | 1985-06-10 |   2200 | NULL |            40 |
+| 7521               | wark                 | cynthla | D      |    670 |       7698 | 1985-02-22 |   1250 | NULL |            40 |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+6 rows in set (0.00 sec)
+
+mysql>
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 8.0.28 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use company;
+Database changed
+mysql> desc employee
+    ->
+    -> ;
++----------------------+-------------+------+-----+---------+-------+
+| Field                | Type        | Null | Key | Default | Extra |
++----------------------+-------------+------+-----+---------+-------+
+| ID_of_the_employee   | varchar(20) | YES  |     | NULL    |       |
+| Name_of_the_employee | varchar(20) | YES  |     | NULL    |       |
+| f_name               | varchar(10) | YES  |     | NULL    |       |
+| m_name               | varchar(10) | YES  |     | NULL    |       |
+| job_id               | int         | YES  | MUL | NULL    |       |
+| manager_id           | int         | YES  |     | NULL    |       |
+| hire_date            | date        | YES  |     | NULL    |       |
+| salary               | int         | YES  |     | NULL    |       |
+| comm                 | int         | YES  |     | NULL    |       |
+| department_ID        | int         | YES  | MUL | NULL    |       |
++----------------------+-------------+------+-----+---------+-------+
+10 rows in set (0.04 sec)
+
+mysql> atler table employee alter column department_ID rename to dep_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'atler table employee alter column department_ID rename to dep_id' at line 1
+mysql> alter table employee alter column department_ID rename to dep_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'rename to dep_id' at line 1
+mysql> alter table employee alter column department_ID change to dep_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'change to dep_id' at line 1
+mysql> alter table employee alter column department_ID change to dep_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'change to dep_id' at line 1
+mysql> alter table employee rename column department_ID to dep_id;
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table employee change dep_id department_ID int;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>
