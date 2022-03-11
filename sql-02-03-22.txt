@@ -1,0 +1,754 @@
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 8.0.28 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'employee' at line 1
+mysql> use company;
+Database changed
+mysql> select * from employee;
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name  | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| 7369               | smith                | jhon    | Q      |    667 |       7902 | 1984-12-17 |    800 | NULL |            20 |
+| 7499               | allen                | kevin   | J      |    670 |       7698 | 1985-02-20 |   1600 |  300 |            30 |
+| 7505               | doyle                | jean    | K      |    671 |       7839 | 1985-04-04 |   2850 | NULL |            30 |
+| 7506               | dennis               | lynn    | S      |    671 |       7839 | 1985-05-04 |   2750 | NULL |            30 |
+| 7507               | baker                | leslie  | D      |    671 |       7839 | 1985-06-10 |   2200 | NULL |            40 |
+| 7521               | wark                 | cynthla | D      |    670 |       7698 | 1985-02-22 |   1250 | NULL |            40 |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from employee;
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name  | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| 7369               | smith                | jhon    | Q      |    667 |       7902 | 1984-12-17 |    800 | NULL |            20 |
+| 7499               | allen                | kevin   | J      |    670 |       7698 | 1985-02-20 |   1600 |  300 |            30 |
+| 7505               | doyle                | jean    | K      |    671 |       7839 | 1985-04-04 |   2850 | NULL |            30 |
+| 7506               | dennis               | lynn    | S      |    671 |       7839 | 1985-05-04 |   2750 | NULL |            30 |
+| 7507               | baker                | leslie  | D      |    671 |       7839 | 1985-06-10 |   2200 | NULL |            40 |
+| 7521               | wark                 | cynthla | D      |    670 |       7698 | 1985-02-22 |   1250 | NULL |            40 |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+6 rows in set (0.00 sec)
+
+mysql> select salaryj from employee;
+ERROR 1054 (42S22): Unknown column 'salaryj' in 'field list'
+mysql> select salary from employee;
++--------+
+| salary |
++--------+
+|    800 |
+|   1600 |
+|   2850 |
+|   2750 |
+|   2200 |
+|   1250 |
++--------+
+6 rows in set (0.00 sec)
+
+mysql> select salary from department;
+ERROR 1054 (42S22): Unknown column 'salary' in 'field list'
+mysql> select salary from employee;
++--------+
+| salary |
++--------+
+|    800 |
+|   1600 |
+|   2850 |
+|   2750 |
+|   2200 |
+|   1250 |
++--------+
+6 rows in set (0.00 sec)
+
+mysql> select salary from employee order by min;
+ERROR 1054 (42S22): Unknown column 'min' in 'order clause'
+mysql> select salary from employee order by asc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'asc' at line 1
+mysql> select salary from employee order by desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desc' at line 1
+mysql> select salary from employee  salary order by desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desc' at line 1
+mysql> select * from employee  salary order by desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desc' at line 1
+mysql> select * , max (salary) employee;
+ERROR 1096 (HY000): No tables used
+mysql> select * , max (salary) from employee;
+ERROR 1630 (42000): FUNCTION company.max does not exist. Check the 'Function Name Parsing and Resolution' section in the Reference Manual
+mysql> select * , max(salary) from employee;
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+-------------+
+| ID_of_the_employee | Name_of_the_employee | f_name | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID | max(salary) |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+-------------+
+| 7369               | smith                | jhon   | Q      |    667 |       7902 | 1984-12-17 |    800 | NULL |            20 |        2850 |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+-------------+
+1 row in set (0.01 sec)
+
+mysql> select * , min(salary) from employee;
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+-------------+
+| ID_of_the_employee | Name_of_the_employee | f_name | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID | min(salary) |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+-------------+
+| 7369               | smith                | jhon   | Q      |    667 |       7902 | 1984-12-17 |    800 | NULL |            20 |         800 |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+-------------+
+1 row in set (0.00 sec)
+
+mysql> select salary , min(salary) from employee;
++--------+-------------+
+| salary | min(salary) |
++--------+-------------+
+|    800 |         800 |
++--------+-------------+
+1 row in set (0.00 sec)
+
+mysql> select salary ,, min(salary) from employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', min(salary) from employee' at line 1
+mysql> select salary , min(salary) from employee;
++--------+-------------+
+| salary | min(salary) |
++--------+-------------+
+|    800 |         800 |
++--------+-------------+
+1 row in set (0.00 sec)
+
+mysql> select * from table_1 where salary=(select min(salary) from  table_1);
+ERROR 1146 (42S02): Table 'company.table_1' doesn't exist
+mysql> select * from table_1 where salary=(select min(salary) from  table_1);
+ERROR 1146 (42S02): Table 'company.table_1' doesn't exist
+mysql> select * from employee where salary=(select min(salary) from  salary);
+ERROR 1146 (42S02): Table 'company.salary' doesn't exist
+mysql> select * from employee where salary=(select min(salary) from  employee);
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| 7369               | smith                | jhon   | Q      |    667 |       7902 | 1984-12-17 |    800 | NULL |            20 |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+1 row in set (0.01 sec)
+
+mysql> select * from employee where salary=(select max(salary) from  employee);
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| 7505               | doyle                | jean   | K      |    671 |       7839 | 1985-04-04 |   2850 | NULL |            30 |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where salary=(select _max(salary) from  employee);
+ERROR 1305 (42000): FUNCTION company._max does not exist
+mysql> select * from employee where salary=(select max(salary) from  employee);
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| 7505               | doyle                | jean   | K      |    671 |       7839 | 1985-04-04 |   2850 | NULL |            30 |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where salary=(select max(salary) from  employee limit 1);
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| 7505               | doyle                | jean   | K      |    671 |       7839 | 1985-04-04 |   2850 | NULL |            30 |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where salary=(select max(salary) from  employee limit 2);
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| 7505               | doyle                | jean   | K      |    671 |       7839 | 1985-04-04 |   2850 | NULL |            30 |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where salary=(select max(salary) from  employee limit 5,4);
+Empty set (0.00 sec)
+
+mysql> select * from employee where salary=(select max(salary) from  employee limit 5,1);
+Empty set (0.00 sec)
+
+mysql> select * from employee where salary=(select max(salary) from  employee limit 3,1);
+Empty set (0.00 sec)
+
+mysql> select * from employee where salary=(select max(salary) from  employee limit 3,6);
+Empty set (0.00 sec)
+
+mysql> select * from employee where salary=(select max(salary) from  employee) limit 3,6;
+Empty set (0.01 sec)
+
+mysql> select * from employee where salary=(select max(salary) from  employee) limit 1,2;
+Empty set (0.00 sec)
+
+mysql> select * from employee where salary=(select max(salary) from  employee limit 1,2);
+Empty set (0.00 sec)
+
+mysql> select * from max(salary) employee where salary=(select max(salary) from  employee);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'max(salary) employee where salary=(select max(salary) from  employee)' at line 1
+mysql> select * from max(salary) employee where salary<(select max(salary) from  employee);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'max(salary) employee where salary<(select max(salary) from  employee)' at line 1
+mysql> select max(salary) from employee where salary<(select max(salary) from  employee);
++-------------+
+| max(salary) |
++-------------+
+|        2750 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select max(salary) from employee where salary<(select max(salary) from  employee);
++-------------+
+| max(salary) |
++-------------+
+|        2750 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select min(salary) from employee where salary>s(elect min(salary) from  employee);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'min(salary) from  employee)' at line 1
+mysql> select * from employee where salary=(select max(salary) from  employee) limit limit 6,3;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'limit 6,3' at line 1
+mysql> select min(salary) from employee where salary>(select min(salary) from  employee);
++-------------+
+| min(salary) |
++-------------+
+|        1250 |
++-------------+
+1 row in set (0.01 sec)
+
+mysql> select * from employee order by desc employee limit 3,1);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desc employee limit 3,1)' at line 1
+mysql> select * from employee order by desc limit 3,1);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desc limit 3,1)' at line 1
+mysql> select * from employee order by desc limit 3,1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desc limit 3,1' at line 1
+mysql> select * from employee salary order by desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desc' at line 1
+mysql> select * from employee where salary=(select max(salary) from  employee) limit 6,3;
+Empty set (0.00 sec)
+
+mysql> select * from employee  limit 6,3;
+Empty set (0.00 sec)
+
+mysql> select * from max(salary) employee where salary<(select max(salary) from  employee);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'max(salary) employee where salary<(select max(salary) from  employee)' at line 1
+mysql> select min(salary) from employee where salary>s(elect min(salary) from  employee);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'min(salary) from  employee)' at line 1
+mysql> select * from table_1 where salary=(select min(salary) from  table_1);
+ERROR 1146 (42S02): Table 'company.table_1' doesn't exist
+mysql>
+mysql> select max(salary) from employee where salary<(select max(salary) from  employee);
++-------------+
+| max(salary) |
++-------------+
+|        2750 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select max(salary) from employee where salary not in (select max(salary) from  employee);
++-------------+
+| max(salary) |
++-------------+
+|        2750 |
++-------------+
+1 row in set (0.01 sec)
+
+mysql> select max(salary) from employee where salary in (select max(salary) from  employee);
++-------------+
+| max(salary) |
++-------------+
+|        2850 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select max(salary) from employee where salary not (select max(salary) from  employee);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(select max(salary) from  employee)' at line 1
+mysql> select max(salary) from employee where salary not in (select max(salary) from  employee);
++-------------+
+| max(salary) |
++-------------+
+|        2750 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee salary order by desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desc' at line 1
+mysql> select salary from employee salary order by desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desc' at line 1
+mysql> select salary from employee order by salary desc;
++--------+
+| salary |
++--------+
+|   2850 |
+|   2750 |
+|   2200 |
+|   1600 |
+|   1250 |
+|    800 |
++--------+
+6 rows in set (0.01 sec)
+
+mysql> select salary from employee order by salary desc limit 3,1;
++--------+
+| salary |
++--------+
+|   1600 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select salary from employee order by salary desc limit 2,1;
++--------+
+| salary |
++--------+
+|   2200 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select salary from employee order by salary desc limit 5,1;
++--------+
+| salary |
++--------+
+|    800 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select salary from employee limit 5,1;
++--------+
+| salary |
++--------+
+|   1250 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select salary from employee order by salary asc limit 5,1;
++--------+
+| salary |
++--------+
+|   2850 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select salary from employee order by salary asc limit 1,1;
++--------+
+| salary |
++--------+
+|   1250 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select salary from employee order by salary asc limit 1,1;
++--------+
+| salary |
++--------+
+|   1250 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select distinct job_id from employee;
++--------+
+| job_id |
++--------+
+|    667 |
+|    670 |
+|    671 |
++--------+
+3 rows in set (0.01 sec)
+
+mysql> select distinct salary from employee order by salary asc limit 5,1;
++--------+
+| salary |
++--------+
+|   2850 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select distinct salary from employee order by salary asc limit 5,2;
++--------+
+| salary |
++--------+
+|   2850 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select salary from employee order by salary asc;
++--------+
+| salary |
++--------+
+|    800 |
+|   1250 |
+|   1600 |
+|   2200 |
+|   2750 |
+|   2850 |
++--------+
+6 rows in set (0.00 sec)
+
+mysql> select salary from employee order by salary asc limit 5,2;
++--------+
+| salary |
++--------+
+|   2850 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select salary from employee order by salary asc limit 5,1;
++--------+
+| salary |
++--------+
+|   2850 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select salary from employee order by salary asc limit 3,1;
++--------+
+| salary |
++--------+
+|   2200 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select salary from employee order by salary asc limit 3,2;
++--------+
+| salary |
++--------+
+|   2200 |
+|   2750 |
++--------+
+2 rows in set (0.00 sec)
+
+mysql> select salary from employee order by salary asc limit 2,2;
++--------+
+| salary |
++--------+
+|   1600 |
+|   2200 |
++--------+
+2 rows in set (0.00 sec)
+
+mysql> select distinct job_id from employee order by job_id asc limit 5,1;
+Empty set (0.00 sec)
+
+mysql> select distinct job_id from employee order by job_id asc limit 2,1;
++--------+
+| job_id |
++--------+
+|    671 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select job_id from employee order by job_id asc;
++--------+
+| job_id |
++--------+
+|    667 |
+|    670 |
+|    670 |
+|    671 |
+|    671 |
+|    671 |
++--------+
+6 rows in set (0.00 sec)
+
+mysql> select job_id from employee order by job_id desc;
++--------+
+| job_id |
++--------+
+|    671 |
+|    671 |
+|    671 |
+|    670 |
+|    670 |
+|    667 |
++--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from emplyoee id  min(job_id) from employee);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'min(job_id) from employee)' at line 1
+mysql> select * from max(salary) employee where salary=(select max(salary) from  employee);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'max(salary) employee where salary=(select max(salary) from  employee)' at line 1
+mysql> select max(salary) from employee where salary<(select max(salary) from  employee);
++-------------+
+| max(salary) |
++-------------+
+|        2750 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select max(job_id) from employee where job_id=(select max(job_id) from  employee);
++-------------+
+| max(job_id) |
++-------------+
+|         671 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select max(*) from employee where job_id=(select max(job_id) from  employee);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*) from employee where job_id=(select max(job_id) from  employee)' at line 1
+mysql> select * from employee where job_id=(select max(job_id) from  employee);
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| 7505               | doyle                | jean   | K      |    671 |       7839 | 1985-04-04 |   2850 | NULL |            30 |
+| 7506               | dennis               | lynn   | S      |    671 |       7839 | 1985-05-04 |   2750 | NULL |            30 |
+| 7507               | baker                | leslie | D      |    671 |       7839 | 1985-06-10 |   2200 | NULL |            40 |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+3 rows in set (0.01 sec)
+
+mysql> select * from employee order by job_id asc;
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name  | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| 7369               | smith                | jhon    | Q      |    667 |       7902 | 1984-12-17 |    800 | NULL |            20 |
+| 7499               | allen                | kevin   | J      |    670 |       7698 | 1985-02-20 |   1600 |  300 |            30 |
+| 7521               | wark                 | cynthla | D      |    670 |       7698 | 1985-02-22 |   1250 | NULL |            40 |
+| 7505               | doyle                | jean    | K      |    671 |       7839 | 1985-04-04 |   2850 | NULL |            30 |
+| 7506               | dennis               | lynn    | S      |    671 |       7839 | 1985-05-04 |   2750 | NULL |            30 |
+| 7507               | baker                | leslie  | D      |    671 |       7839 | 1985-06-10 |   2200 | NULL |            40 |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from employee order by job_id desc;
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name  | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| 7505               | doyle                | jean    | K      |    671 |       7839 | 1985-04-04 |   2850 | NULL |            30 |
+| 7506               | dennis               | lynn    | S      |    671 |       7839 | 1985-05-04 |   2750 | NULL |            30 |
+| 7507               | baker                | leslie  | D      |    671 |       7839 | 1985-06-10 |   2200 | NULL |            40 |
+| 7499               | allen                | kevin   | J      |    670 |       7698 | 1985-02-20 |   1600 |  300 |            30 |
+| 7521               | wark                 | cynthla | D      |    670 |       7698 | 1985-02-22 |   1250 | NULL |            40 |
+| 7369               | smith                | jhon    | Q      |    667 |       7902 | 1984-12-17 |    800 | NULL |            20 |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from employee where job_id<(select max(job_id) from  employee);
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name  | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| 7369               | smith                | jhon    | Q      |    667 |       7902 | 1984-12-17 |    800 | NULL |            20 |
+| 7499               | allen                | kevin   | J      |    670 |       7698 | 1985-02-20 |   1600 |  300 |            30 |
+| 7521               | wark                 | cynthla | D      |    670 |       7698 | 1985-02-22 |   1250 | NULL |            40 |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+3 rows in set (0.01 sec)
+
+mysql> select * from employee where job_id>(select max(job_id) from  employee);
+Empty set (0.00 sec)
+
+mysql> select * from employee where job_id>(select min(job_id) from  employee);
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name  | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| 7499               | allen                | kevin   | J      |    670 |       7698 | 1985-02-20 |   1600 |  300 |            30 |
+| 7521               | wark                 | cynthla | D      |    670 |       7698 | 1985-02-22 |   1250 | NULL |            40 |
+| 7505               | doyle                | jean    | K      |    671 |       7839 | 1985-04-04 |   2850 | NULL |            30 |
+| 7506               | dennis               | lynn    | S      |    671 |       7839 | 1985-05-04 |   2750 | NULL |            30 |
+| 7507               | baker                | leslie  | D      |    671 |       7839 | 1985-06-10 |   2200 | NULL |            40 |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee where job_id=job_id<(select min(job_id) from  employee);
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name  | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| 7369               | smith                | jhon    | Q      |    667 |       7902 | 1984-12-17 |    800 | NULL |            20 |
+| 7499               | allen                | kevin   | J      |    670 |       7698 | 1985-02-20 |   1600 |  300 |            30 |
+| 7505               | doyle                | jean    | K      |    671 |       7839 | 1985-04-04 |   2850 | NULL |            30 |
+| 7506               | dennis               | lynn    | S      |    671 |       7839 | 1985-05-04 |   2750 | NULL |            30 |
+| 7507               | baker                | leslie  | D      |    671 |       7839 | 1985-06-10 |   2200 | NULL |            40 |
+| 7521               | wark                 | cynthla | D      |    670 |       7698 | 1985-02-22 |   1250 | NULL |            40 |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from employee where job_id<(select min(job_id) from  employee);
+Empty set (0.00 sec)
+
+mysql> select * from employee where job_id>(select min(job_id) from  employee);
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name  | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| 7499               | allen                | kevin   | J      |    670 |       7698 | 1985-02-20 |   1600 |  300 |            30 |
+| 7521               | wark                 | cynthla | D      |    670 |       7698 | 1985-02-22 |   1250 | NULL |            40 |
+| 7505               | doyle                | jean    | K      |    671 |       7839 | 1985-04-04 |   2850 | NULL |            30 |
+| 7506               | dennis               | lynn    | S      |    671 |       7839 | 1985-05-04 |   2750 | NULL |            30 |
+| 7507               | baker                | leslie  | D      |    671 |       7839 | 1985-06-10 |   2200 | NULL |            40 |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> select job_id from employee where job_id>(select min(job_id) from  employee);
++--------+
+| job_id |
++--------+
+|    670 |
+|    670 |
+|    671 |
+|    671 |
+|    671 |
++--------+
+5 rows in set (0.00 sec)
+
+mysql> select min(job_id) from employee where job_id>(select min(job_id) from  employee);
++-------------+
+| min(job_id) |
++-------------+
+|         670 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select distinct job_id from employee order by job_id asc limit 5,1;
+Empty set (0.00 sec)
+
+mysql>
+mysql> select distinct job_id from employee order by job_id asc limit 3,1;
+Empty set (0.00 sec)
+
+mysql> select distinct job_id from employee order by job_id desc limit 3,1;
+Empty set (0.00 sec)
+
+mysql> select distinct job_id from employee order by job_id desc limit 1,1;
++--------+
+| job_id |
++--------+
+|    670 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select distinct job_id from employee order by job_id desc limit 2,1;
++--------+
+| job_id |
++--------+
+|    667 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where job_id=(select distint job_id from employee order by asc limit 2,1);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'asc limit 2,1)' at line 1
+mysql> select * from employee where job_id=(select distint job_id from employee order by desc limit 2,1);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desc limit 2,1)' at line 1
+mysql> select * from employee where job_id=(select distinct job_id from employee order by desc limit 2,1);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desc limit 2,1)' at line 1
+mysql> select * from employee where job_id=(select distinct job_id from employee order by asc limit 2,1);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'asc limit 2,1)' at line 1
+mysql> select * from employee where job_id=(select distinct job_id from employee order by asc limit 1,1);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'asc limit 1,1)' at line 1
+mysql> select * from employee where job_id=(select distinct job_id from employee order by job_id asc limit 1,1);
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name  | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| 7499               | allen                | kevin   | J      |    670 |       7698 | 1985-02-20 |   1600 |  300 |            30 |
+| 7521               | wark                 | cynthla | D      |    670 |       7698 | 1985-02-22 |   1250 | NULL |            40 |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employee where job_id=(select distinct job_id from employee order by job_id desc limit 1,1);
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name  | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| 7499               | allen                | kevin   | J      |    670 |       7698 | 1985-02-20 |   1600 |  300 |            30 |
+| 7521               | wark                 | cynthla | D      |    670 |       7698 | 1985-02-22 |   1250 | NULL |            40 |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employee where job_id=(select distinct job_id from employee order by job_id desc limit 2,1);
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| 7369               | smith                | jhon   | Q      |    667 |       7902 | 1984-12-17 |    800 | NULL |            20 |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where job_id=(select distinct job_id from employee order by job_id desc limit 2,1);
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| 7369               | smith                | jhon   | Q      |    667 |       7902 | 1984-12-17 |    800 | NULL |            20 |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where job_id=(select distinct job_id from employee order by job_id desc limit 3,1);
+Empty set (0.00 sec)
+
+mysql> select * from employee where job_id=(select distinct job_id from employee order by job_id desc limit 2,1);
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| 7369               | smith                | jhon   | Q      |    667 |       7902 | 1984-12-17 |    800 | NULL |            20 |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where job_id=(select distinct job_id from employee order by job_id asc limit 1,1);
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name  | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| 7499               | allen                | kevin   | J      |    670 |       7698 | 1985-02-20 |   1600 |  300 |            30 |
+| 7521               | wark                 | cynthla | D      |    670 |       7698 | 1985-02-22 |   1250 | NULL |            40 |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employee where job_id=(select distinct job_id from employee order by job_id asc limit 1,2);
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> select * from employee where job_id=(select distinct job_id from employee order by job_id asc limit 2,2);
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| 7505               | doyle                | jean   | K      |    671 |       7839 | 1985-04-04 |   2850 | NULL |            30 |
+| 7506               | dennis               | lynn   | S      |    671 |       7839 | 1985-05-04 |   2750 | NULL |            30 |
+| 7507               | baker                | leslie | D      |    671 |       7839 | 1985-06-10 |   2200 | NULL |            40 |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+3 rows in set (0.01 sec)
+
+mysql> select * from employee where job_id=(select distinct job_id from employee order by job_id asc limit 2,1);
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| 7505               | doyle                | jean   | K      |    671 |       7839 | 1985-04-04 |   2850 | NULL |            30 |
+| 7506               | dennis               | lynn   | S      |    671 |       7839 | 1985-05-04 |   2750 | NULL |            30 |
+| 7507               | baker                | leslie | D      |    671 |       7839 | 1985-06-10 |   2200 | NULL |            40 |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from employee where job_id=(select job_id from employee order by job_id asc limit 2,1);
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name  | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| 7499               | allen                | kevin   | J      |    670 |       7698 | 1985-02-20 |   1600 |  300 |            30 |
+| 7521               | wark                 | cynthla | D      |    670 |       7698 | 1985-02-22 |   1250 | NULL |            40 |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employee where job_id=(select job_id from employee order by job_id asc limit 2,1) limit 1;
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| 7499               | allen                | kevin  | J      |    670 |       7698 | 1985-02-20 |   1600 |  300 |            30 |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where job_id=(select job_id from employee order by job_id asc limit 2,1) limit 1;
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| 7499               | allen                | kevin  | J      |    670 |       7698 | 1985-02-20 |   1600 |  300 |            30 |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where job_id=(select job_id from employee order by job_id asc limit 2,1);
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name  | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+| 7499               | allen                | kevin   | J      |    670 |       7698 | 1985-02-20 |   1600 |  300 |            30 |
+| 7521               | wark                 | cynthla | D      |    670 |       7698 | 1985-02-22 |   1250 | NULL |            40 |
++--------------------+----------------------+---------+--------+--------+------------+------------+--------+------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employee where job_id=(select job_id from employee order by job_id asc limit 2,1) limit 1;
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| ID_of_the_employee | Name_of_the_employee | f_name | m_name | job_id | manager_id | hire_date  | salary | comm | department_ID |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+| 7499               | allen                | kevin  | J      |    670 |       7698 | 1985-02-20 |   1600 |  300 |            30 |
++--------------------+----------------------+--------+--------+--------+------------+------------+--------+------+---------------+
+1 row in set (0.00 sec)
+
+mysql>
