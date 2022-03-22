@@ -1,0 +1,589 @@
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 8.0.28 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use lab;
+Database changed
+mysql> select * from product;
+Empty set (0.02 sec)
+
+mysql> insert into values ('p001','lux_soap','lux_international',15.67,20.43,soap);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'values ('p001','lux_soap','lux_international',15.67,20.43,soap)' at line 1
+mysql> insert into values ('p001','lux_soap','lux_international',15.67,20.43,'soap');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'values ('p001','lux_soap','lux_international',15.67,20.43,'soap')' at line 1
+mysql> insert into values ('p001','lux_soap','lux_international','15.67','20.43','soap');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'values ('p001','lux_soap','lux_international','15.67','20.43','soap')' at line 1
+mysql> insert into product values ('p001','lux_soap','lux_international',15.67,20.43,'soap');
+ERROR 1406 (22001): Data too long for column 'manufacturer_name' at row 1
+mysql> alter table product change manufacturer_name manufacturer_name varchar(20);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into product values ('p001','lux_soap','lux_international',15.67,20.43,'soap');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into product values ('p002','copy','times_copy_org',14.8,16.4,'copy');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into product values ('p003','marry_biscuit','marigold_org',2218.8,2220.4,'biscuit');
+ERROR 1264 (22003): Out of range value for column 'product_rate' at row 1
+mysql> alter table product change product_rate product_rate decimal(8,3);
+Query OK, 2 rows affected (0.11 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into product values ('p003','marry_biscuit','marigold_org',2218.8,2220.4,'biscuit');
+ERROR 1264 (22003): Out of range value for column 'sell_price' at row 1
+mysql> alter table product change sell_price sell_prime decimal(8,3);
+Query OK, 2 rows affected (0.06 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into product values ('p003','marry_biscuit','marigold_org',2218.8,2220.4,'biscuit');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into product values ('p004','mitsubisi_pen','pen_iternational',2015.67,2120.43,'pen');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into product values ('p005','learn_books','book_world',5104.8,5116.4,'book');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into product values ('p006','tata_steel','tata_org',5118.8,5120.4,'tata');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into product values ('p007','seagate hdd',5104.8,5116.4,'hdd1034');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into product values ('p007','seagate hdd','seaget_world',5104.8,5116.4,'hdd1034');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into product values ('p008','dvd writer','frontec_org',5118.8,5120.4,'dvdrw');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from product;
++------------+---------------+-------------------+--------------+------------+---------------------+
+| product_is | product_name  | manufacturer_name | product_rate | sell_prime | product_description |
++------------+---------------+-------------------+--------------+------------+---------------------+
+| p001       | lux_soap      | lux_international |       15.670 |     20.430 | soap                |
+| p002       | copy          | times_copy_org    |       14.800 |     16.400 | copy                |
+| p003       | marry_biscuit | marigold_org      |     2218.800 |   2220.400 | biscuit             |
+| p004       | mitsubisi_pen | pen_iternational  |     2015.670 |   2120.430 | pen                 |
+| p005       | learn_books   | book_world        |     5104.800 |   5116.400 | book                |
+| p006       | tata_steel    | tata_org          |     5118.800 |   5120.400 | tata                |
+| p007       | seagate hdd   | seaget_world      |     5104.800 |   5116.400 | hdd1034             |
+| p008       | dvd writer    | frontec_org       |     5118.800 |   5120.400 | dvdrw               |
++------------+---------------+-------------------+--------------+------------+---------------------+
+8 rows in set (0.00 sec)
+
+mysql> create table client (client_id varchar(20),client_name varchar(20), address varchar(20),city varchar(20),pin int,state varchar(20),bal_due decimal(8,3));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> insert into client values('cn01001','alak roy','b.d.para','amarpur',799101,'tripura',390.9);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into client values('cn01002','suman roy','puk para','agartala',799102,'tripura',2390.9);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into client values('cn01003','moytree nayak','pachmile','tezpur',799103,'assam',9990.9);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into client values('cn01004','priya das','chora para','kamalpur',799152,'tripura',1390.9);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> update client set pin=799152 where client_id='cn1003';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> select * from client;
++-----------+---------------+------------+----------+--------+---------+----------+
+| client_id | client_name   | address    | city     | pin    | state   | bal_due  |
++-----------+---------------+------------+----------+--------+---------+----------+
+| cn01001   | alak roy      | b.d.para   | amarpur  | 799101 | tripura |  390.900 |
+| cn01002   | suman roy     | puk para   | agartala | 799102 | tripura | 2390.900 |
+| cn01003   | moytree nayak | pachmile   | tezpur   | 799103 | assam   | 9990.900 |
+| cn01004   | priya das     | chora para | kamalpur | 799152 | tripura | 1390.900 |
++-----------+---------------+------------+----------+--------+---------+----------+
+4 rows in set (0.00 sec)
+
+mysql> update client set pin=799152 where client_id='cn01003';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from client;
++-----------+---------------+------------+----------+--------+---------+----------+
+| client_id | client_name   | address    | city     | pin    | state   | bal_due  |
++-----------+---------------+------------+----------+--------+---------+----------+
+| cn01001   | alak roy      | b.d.para   | amarpur  | 799101 | tripura |  390.900 |
+| cn01002   | suman roy     | puk para   | agartala | 799102 | tripura | 2390.900 |
+| cn01003   | moytree nayak | pachmile   | tezpur   | 799152 | assam   | 9990.900 |
+| cn01004   | priya das     | chora para | kamalpur | 799152 | tripura | 1390.900 |
++-----------+---------------+------------+----------+--------+---------+----------+
+4 rows in set (0.00 sec)
+
+mysql> update client set pin=799301 where client_id='cn1004';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> update client set pin=799301 where client_id='cn01004';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from client;
++-----------+---------------+------------+----------+--------+---------+----------+
+| client_id | client_name   | address    | city     | pin    | state   | bal_due  |
++-----------+---------------+------------+----------+--------+---------+----------+
+| cn01001   | alak roy      | b.d.para   | amarpur  | 799101 | tripura |  390.900 |
+| cn01002   | suman roy     | puk para   | agartala | 799102 | tripura | 2390.900 |
+| cn01003   | moytree nayak | pachmile   | tezpur   | 799152 | assam   | 9990.900 |
+| cn01004   | priya das     | chora para | kamalpur | 799301 | tripura | 1390.900 |
++-----------+---------------+------------+----------+--------+---------+----------+
+4 rows in set (0.00 sec)
+
+mysql> insert into client values('cn01005','mita mia','kamal para','singur',799721,'tripura',190.9);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into client values('cn01006','pulak roy','bircity','sonitpur',799141,'assam',110.9);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into client values('cn01007','munni das','nappam','sonitpur',799152,'assam',190.9);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into client values('cn01008','kusum roy','city_dos,'tezpur',799141,'assam',110.9);
+    '> ;
+    '> ^C
+mysql> insert into client values('cn01008','kusum roy','city_dos,'tezpur',799141,'assam',110.9);
+    '> ^C
+mysql>
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 15
+Server version: 8.0.28 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use lab;
+Database changed
+mysql> show tables;
++---------------+
+| Tables_in_lab |
++---------------+
+| client        |
+| employee      |
+| employee2     |
+| product       |
+| salesman      |
++---------------+
+5 rows in set (0.02 sec)
+
+mysql> create table sales_order_details (sales_order_no varchar(20),sales_order_date date,client_id varchar(20),salesman_id varchar(20),bill_payby_party check (bill_payby_party=yes or bill_payby_party=no),delivery_date date,product_rate decimal (8,3),tot_quantity_order int,cancle_date date);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'check (bill_payby_party=yes or bill_payby_party=no),delivery_date date,product_r' at line 1
+mysql> create table sales_order_details (sales_order_no varchar(20),sales_order_date date,client_id varchar(20),salesman_id varchar(20),bill_payby_party check (yes,no),delivery_date date,product_rate decimal (8,3),tot_quantity_order int,cancle_date date);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'check (yes,no),delivery_date date,product_rate decimal (8,3),tot_quantity_order ' at line 1
+mysql> create table sales_order_details (sales_order_no varchar(20),sales_order_date date,client_id varchar(20),salesman_id varchar(20),bill_payby_party check ('yes','no'),delivery_date date,product_rate decimal (8,3),tot_quantity_order int,cancle_date date);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'check ('yes','no'),delivery_date date,product_rate decimal (8,3),tot_quantity_or' at line 1
+mysql> create table sales_order_details (sales_order_no varchar(20),sales_order_date date,client_id varchar(20),salesman_id varchar(20),bill_payby_party check (bill_payby_party='yes' or bill_payby_party='no'),delivery_date date,product_rate decimal (8,3),tot_quantity_order int,cancle_date date);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'check (bill_payby_party='yes' or bill_payby_party='no'),delivery_date date,produ' at line 1
+mysql> create table sales_order_details (sales_order_no varchar(20),sales_order_date date,client_id varchar(20),salesman_id varchar(20),bill_payby_party varchar(10) check (bill_payby_party in ('yes','no')),delivery_date date,product_rate decimal (8,3),tot_quantity_order int,cancle_date date);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> insert into sales_order_details values ('on01001','2008-08-01','cn01001','s001','yes','2008-08-20',2220.4,50,'0000-00-00');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from sales_order_details;
++----------------+------------------+-----------+-------------+------------------+---------------+--------------+--------------------+-------------+
+| sales_order_no | sales_order_date | client_id | salesman_id | bill_payby_party | delivery_date | product_rate | tot_quantity_order | cancle_date |
++----------------+------------------+-----------+-------------+------------------+---------------+--------------+--------------------+-------------+
+| on01001        | 2008-08-01       | cn01001   | s001        | yes              | 2008-08-20    |     2220.400 |                 50 | 0000-00-00  |
++----------------+------------------+-----------+-------------+------------------+---------------+--------------+--------------------+-------------+
+1 row in set (0.00 sec)
+
+mysql> select * from sales_order_details;
++----------------+------------------+-----------+-------------+------------------+---------------+--------------+--------------------+-------------+
+| sales_order_no | sales_order_date | client_id | salesman_id | bill_payby_party | delivery_date | product_rate | tot_quantity_order | cancle_date |
++----------------+------------------+-----------+-------------+------------------+---------------+--------------+--------------------+-------------+
+| on01001        | 2008-08-01       | cn01001   | s001        | yes              | 2008-08-20    |     2220.400 |                 50 | 0000-00-00  |
++----------------+------------------+-----------+-------------+------------------+---------------+--------------+--------------------+-------------+
+1 row in set (0.00 sec)
+
+mysql> select * from sales_order_details;
++----------------+------------------+-----------+-------------+------------------+---------------+--------------+--------------------+-------------+
+| sales_order_no | sales_order_date | client_id | salesman_id | bill_payby_party | delivery_date | product_rate | tot_quantity_order | cancle_date |
++----------------+------------------+-----------+-------------+------------------+---------------+--------------+--------------------+-------------+
+| on01001        | 2008-08-01       | cn01001   | s001        | yes              | 2008-08-20    |     2220.400 |                 50 | 0000-00-00  |
++----------------+------------------+-----------+-------------+------------------+---------------+--------------+--------------------+-------------+
+1 row in set (0.00 sec)
+
+mysql> insert into sales_order_details values ('on01002','2008-08-12','cn01004','s001','yes','2008-08-23',2220.4,15,'0000-00-00');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into sales_order_details values ('on01003','2008-08-12','cn01005','s003','yes','2008-08-26',2220.4,10,'0000-00-00');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> alter table sales_order_details add primary key (sales_order_no);
+Query OK, 0 rows affected (0.13 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table sales_order_details add foregin key (client_id) references client(client_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key (client_id) references client(client_id)' at line 1
+mysql> alter table sales_order_details add foregin key (client_id) references primary key client(client_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key (client_id) references primary key client(client_id)' at line 1
+mysql> alter table sales_order_details add foreign key (client_id) references client(client_id);
+Query OK, 3 rows affected (0.05 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> alter table sales_order_details add foreign key (salesman_id) references salesman(salesman_id);
+Query OK, 3 rows affected (0.05 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> insert into sales_order_details values ('on01004','2008-08-13','cn01004','s001','yes','2008-08-20',2220.4,15,'0000-00-00');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into sales_order_details values ('on01005','2008-08-14','cn01002','s002','no','2008-08-30',2220.4,52,'2008-08-28');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into sales_order_details values ('on01006','2008-08-15','cn01001','s001','yes','2008-08-31',2220.4,53,'0000-00-00');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into sales_order_details values ('on01007','2008-08-16','cn01003','s004','yes','2008-08-28',2220.4,54,'0000-00-00');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into sales_order_details values ('on01008','2008-02-01','cn01004','s003','no','2008-08-28',8220.4,54,'2008-03-18');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> update sales_order_details set sales_order_date='2008-01-16' where sales_order_no='on01007';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from sales_order_details;
++----------------+------------------+-----------+-------------+------------------+---------------+--------------+--------------------+-------------+
+| sales_order_no | sales_order_date | client_id | salesman_id | bill_payby_party | delivery_date | product_rate | tot_quantity_order | cancle_date |
++----------------+------------------+-----------+-------------+------------------+---------------+--------------+--------------------+-------------+
+| on01001        | 2008-08-01       | cn01001   | s001        | yes              | 2008-08-20    |     2220.400 |                 50 | 0000-00-00  |
+| on01002        | 2008-08-12       | cn01004   | s001        | yes              | 2008-08-23    |     2220.400 |                 15 | 0000-00-00  |
+| on01003        | 2008-08-12       | cn01005   | s003        | yes              | 2008-08-26    |     2220.400 |                 10 | 0000-00-00  |
+| on01004        | 2008-08-13       | cn01004   | s001        | yes              | 2008-08-20    |     2220.400 |                 15 | 0000-00-00  |
+| on01005        | 2008-08-14       | cn01002   | s002        | no               | 2008-08-30    |     2220.400 |                 52 | 2008-08-28  |
+| on01006        | 2008-08-15       | cn01001   | s001        | yes              | 2008-08-31    |     2220.400 |                 53 | 0000-00-00  |
+| on01007        | 2008-01-16       | cn01003   | s004        | yes              | 2008-08-28    |     2220.400 |                 54 | 0000-00-00  |
+| on01008        | 2008-02-01       | cn01004   | s003        | no               | 2008-08-28    |     8220.400 |                 54 | 2008-03-18  |
++----------------+------------------+-----------+-------------+------------------+---------------+--------------+--------------------+-------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from product;
++------------+---------------+-------------------+--------------+------------+---------------------+
+| product_is | product_name  | manufacturer_name | product_rate | sell_prime | product_description |
++------------+---------------+-------------------+--------------+------------+---------------------+
+| p001       | lux_soap      | lux_international |       15.670 |     20.430 | soap                |
+| p002       | copy          | times_copy_org    |       14.800 |     16.400 | copy                |
+| p003       | marry_biscuit | marigold_org      |     2218.800 |   2220.400 | biscuit             |
+| p004       | mitsubisi_pen | pen_iternational  |     2015.670 |   2120.430 | pen                 |
+| p005       | learn_books   | book_world        |     5104.800 |   5116.400 | book                |
+| p006       | tata_steel    | tata_org          |     5118.800 |   5120.400 | tata                |
+| p007       | seagate hdd   | seaget_world      |     5104.800 |   5116.400 | hdd1034             |
+| p008       | dvd writer    | frontec_org       |     5118.800 |   5120.400 | dvdrw               |
++------------+---------------+-------------------+--------------+------------+---------------------+
+8 rows in set (0.01 sec)
+
+mysql> select * from client;
++-----------+---------------+------------+----------+--------+---------+----------+
+| client_id | client_name   | address    | city     | pin    | state   | bal_due  |
++-----------+---------------+------------+----------+--------+---------+----------+
+| cn01001   | alak roy      | b.d.para   | amarpur  | 799101 | tripura |  390.900 |
+| cn01002   | suman roy     | puk para   | agartala | 799102 | tripura | 2390.900 |
+| cn01003   | moytree nayak | pachmile   | tezpur   | 799152 | assam   | 9990.900 |
+| cn01004   | priya das     | chora para | kamalpur | 799301 | tripura | 1390.900 |
+| cn01005   | mita mia      | kamal para | singur   | 799721 | tripura |  190.900 |
+| cn01006   | pulak roy     | bircity    | sonitpur | 799141 | assam   |  110.900 |
+| cn01007   | munni das     | nappam     | sonitpur | 799152 | assam   |  190.900 |
+| cn01008   | kusum roy     | city_dos   | tezpur   | 799141 | assam   |  110.900 |
+| cn01009   | mina das      | pachmile   | tezpur   | 799152 | assam   |  190.900 |
+| cn01010   | pauri das     | pachmile   | tezpur   | 799152 | assam   | 2990.900 |
+| cn01011   | manali das    | satmile    | tezpur   | 799154 | assam   | 3990.900 |
++-----------+---------------+------------+----------+--------+---------+----------+
+11 rows in set (0.01 sec)
+
+mysql> select * from salesman;
++-------------+---------------+-------------+------------+--------+-----------+--------+
+| salesman_id | salesman_name | address     | city       | pin    | state     | salary |
++-------------+---------------+-------------+------------+--------+-----------+--------+
+| s001        | rohan das     | nappam      | tezpur     |  79970 | assam     |   8000 |
+| s002        | rohan das     | nappam      | tezpur     | 799170 | assam     |   8000 |
+| s003        | smita das     | nirjuli     | itanagar   | 799701 | arunachal |   9000 |
+| s004        | kabir bora    | nappam      | tezpur     | 799703 | assam     |   8500 |
+| s005        | neha singh    | borbota     | sonitpur   |  79597 | assam     |   9600 |
+| s006        | priya agarwal | gandhi road | 32 distric | 799750 | delhi     |   9900 |
+| s007        | ashok paul    | filmcity    | munnabari  | 799740 | mumbai    |   8900 |
++-------------+---------------+-------------+------------+--------+-----------+--------+
+7 rows in set (0.02 sec)
+
+mysql> select client_name,city from client;
++---------------+----------+
+| client_name   | city     |
++---------------+----------+
+| alak roy      | amarpur  |
+| suman roy     | agartala |
+| moytree nayak | tezpur   |
+| priya das     | kamalpur |
+| mita mia      | singur   |
+| pulak roy     | sonitpur |
+| munni das     | sonitpur |
+| kusum roy     | tezpur   |
+| mina das      | tezpur   |
+| pauri das     | tezpur   |
+| manali das    | tezpur   |
++---------------+----------+
+11 rows in set (0.00 sec)
+
+mysql> select product_name from product;
++---------------+
+| product_name  |
++---------------+
+| lux_soap      |
+| copy          |
+| marry_biscuit |
+| mitsubisi_pen |
+| learn_books   |
+| tata_steel    |
+| seagate hdd   |
+| dvd writer    |
++---------------+
+8 rows in set (0.00 sec)
+
+mysql> select client_name from client where client_name like '_a%';
++-------------+
+| client_name |
++-------------+
+| pauri das   |
+| manali das  |
++-------------+
+2 rows in set (0.00 sec)
+
+mysql> select client_name from client where city='tezpur';
++---------------+
+| client_name   |
++---------------+
+| moytree nayak |
+| kusum roy     |
+| mina das      |
+| pauri das     |
+| manali das    |
++---------------+
+5 rows in set (0.00 sec)
+
+mysql> select  from product;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from product' at line 1
+mysql> select * from product where sell_prime>2000 and sell_prime<=5000;
++------------+---------------+-------------------+--------------+------------+---------------------+
+| product_is | product_name  | manufacturer_name | product_rate | sell_prime | product_description |
++------------+---------------+-------------------+--------------+------------+---------------------+
+| p003       | marry_biscuit | marigold_org      |     2218.800 |   2220.400 | biscuit             |
+| p004       | mitsubisi_pen | pen_iternational  |     2015.670 |   2120.430 | pen                 |
++------------+---------------+-------------------+--------------+------------+---------------------+
+2 rows in set (0.00 sec)
+
+mysql> alter table product add column new_price decimal(6,3);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from product ;
++------------+---------------+-------------------+--------------+------------+---------------------+-----------+
+| product_is | product_name  | manufacturer_name | product_rate | sell_prime | product_description | new_price |
++------------+---------------+-------------------+--------------+------------+---------------------+-----------+
+| p001       | lux_soap      | lux_international |       15.670 |     20.430 | soap                |      NULL |
+| p002       | copy          | times_copy_org    |       14.800 |     16.400 | copy                |      NULL |
+| p003       | marry_biscuit | marigold_org      |     2218.800 |   2220.400 | biscuit             |      NULL |
+| p004       | mitsubisi_pen | pen_iternational  |     2015.670 |   2120.430 | pen                 |      NULL |
+| p005       | learn_books   | book_world        |     5104.800 |   5116.400 | book                |      NULL |
+| p006       | tata_steel    | tata_org          |     5118.800 |   5120.400 | tata                |      NULL |
+| p007       | seagate hdd   | seaget_world      |     5104.800 |   5116.400 | hdd1034             |      NULL |
+| p008       | dvd writer    | frontec_org       |     5118.800 |   5120.400 | dvdrw               |      NULL |
++------------+---------------+-------------------+--------------+------------+---------------------+-----------+
+8 rows in set (0.01 sec)
+
+mysql> alter table sales_order_details change product_rate new_product_rate decimal(6,3);
+ERROR 1264 (22003): Out of range value for column 'new_product_rate' at row 1
+mysql> alter table sales_order_details change product_rate new_product_rate decimal(8,3);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from product order by product_description;
++------------+---------------+-------------------+--------------+------------+---------------------+-----------+
+| product_is | product_name  | manufacturer_name | product_rate | sell_prime | product_description | new_price |
++------------+---------------+-------------------+--------------+------------+---------------------+-----------+
+| p003       | marry_biscuit | marigold_org      |     2218.800 |   2220.400 | biscuit             |      NULL |
+| p005       | learn_books   | book_world        |     5104.800 |   5116.400 | book                |      NULL |
+| p002       | copy          | times_copy_org    |       14.800 |     16.400 | copy                |      NULL |
+| p008       | dvd writer    | frontec_org       |     5118.800 |   5120.400 | dvdrw               |      NULL |
+| p007       | seagate hdd   | seaget_world      |     5104.800 |   5116.400 | hdd1034             |      NULL |
+| p004       | mitsubisi_pen | pen_iternational  |     2015.670 |   2120.430 | pen                 |      NULL |
+| p001       | lux_soap      | lux_international |       15.670 |     20.430 | soap                |      NULL |
+| p006       | tata_steel    | tata_org          |     5118.800 |   5120.400 | tata                |      NULL |
++------------+---------------+-------------------+--------------+------------+---------------------+-----------+
+8 rows in set (0.01 sec)
+
+mysql> select sales_order_no,sales_order_date from sales_order_details;
++----------------+------------------+
+| sales_order_no | sales_order_date |
++----------------+------------------+
+| on01001        | 2008-08-01       |
+| on01002        | 2008-08-12       |
+| on01003        | 2008-08-12       |
+| on01004        | 2008-08-13       |
+| on01005        | 2008-08-14       |
+| on01006        | 2008-08-15       |
+| on01007        | 2008-01-16       |
+| on01008        | 2008-02-01       |
++----------------+------------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from sales_order_details where delivery_date>25;
++----------------+------------------+-----------+-------------+------------------+---------------+------------------+--------------------+-------------+
+| sales_order_no | sales_order_date | client_id | salesman_id | bill_payby_party | delivery_date | new_product_rate | tot_quantity_order | cancle_date |
++----------------+------------------+-----------+-------------+------------------+---------------+------------------+--------------------+-------------+
+| on01001        | 2008-08-01       | cn01001   | s001        | yes              | 2008-08-20    |         2220.400 |                 50 | 0000-00-00  |
+| on01002        | 2008-08-12       | cn01004   | s001        | yes              | 2008-08-23    |         2220.400 |                 15 | 0000-00-00  |
+| on01003        | 2008-08-12       | cn01005   | s003        | yes              | 2008-08-26    |         2220.400 |                 10 | 0000-00-00  |
+| on01004        | 2008-08-13       | cn01004   | s001        | yes              | 2008-08-20    |         2220.400 |                 15 | 0000-00-00  |
+| on01005        | 2008-08-14       | cn01002   | s002        | no               | 2008-08-30    |         2220.400 |                 52 | 2008-08-28  |
+| on01006        | 2008-08-15       | cn01001   | s001        | yes              | 2008-08-31    |         2220.400 |                 53 | 0000-00-00  |
+| on01007        | 2008-01-16       | cn01003   | s004        | yes              | 2008-08-28    |         2220.400 |                 54 | 0000-00-00  |
+| on01008        | 2008-02-01       | cn01004   | s003        | no               | 2008-08-28    |         8220.400 |                 54 | 2008-03-18  |
++----------------+------------------+-----------+-------------+------------------+---------------+------------------+--------------------+-------------+
+8 rows in set, 1 warning (0.01 sec)
+
+mysql> select * from sales_order_details where delivery_date>'2008-08-25';
++----------------+------------------+-----------+-------------+------------------+---------------+------------------+--------------------+-------------+
+| sales_order_no | sales_order_date | client_id | salesman_id | bill_payby_party | delivery_date | new_product_rate | tot_quantity_order | cancle_date |
++----------------+------------------+-----------+-------------+------------------+---------------+------------------+--------------------+-------------+
+| on01003        | 2008-08-12       | cn01005   | s003        | yes              | 2008-08-26    |         2220.400 |                 10 | 0000-00-00  |
+| on01005        | 2008-08-14       | cn01002   | s002        | no               | 2008-08-30    |         2220.400 |                 52 | 2008-08-28  |
+| on01006        | 2008-08-15       | cn01001   | s001        | yes              | 2008-08-31    |         2220.400 |                 53 | 0000-00-00  |
+| on01007        | 2008-01-16       | cn01003   | s004        | yes              | 2008-08-28    |         2220.400 |                 54 | 0000-00-00  |
+| on01008        | 2008-02-01       | cn01004   | s003        | no               | 2008-08-28    |         8220.400 |                 54 | 2008-03-18  |
++----------------+------------------+-----------+-------------+------------------+---------------+------------------+--------------------+-------------+
+5 rows in set (0.01 sec)
+
+mysql> select * from sales_order_details where delivery_date<'2008-08-25';
++----------------+------------------+-----------+-------------+------------------+---------------+------------------+--------------------+-------------+
+| sales_order_no | sales_order_date | client_id | salesman_id | bill_payby_party | delivery_date | new_product_rate | tot_quantity_order | cancle_date |
++----------------+------------------+-----------+-------------+------------------+---------------+------------------+--------------------+-------------+
+| on01001        | 2008-08-01       | cn01001   | s001        | yes              | 2008-08-20    |         2220.400 |                 50 | 0000-00-00  |
+| on01002        | 2008-08-12       | cn01004   | s001        | yes              | 2008-08-23    |         2220.400 |                 15 | 0000-00-00  |
+| on01004        | 2008-08-13       | cn01004   | s001        | yes              | 2008-08-20    |         2220.400 |                 15 | 0000-00-00  |
++----------------+------------------+-----------+-------------+------------------+---------------+------------------+--------------------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> delete from sales_order_details where delivery_date<'2008-08-25';
+Query OK, 3 rows affected (0.01 sec)
+
+mysql> select * from sales_order_details where delivery_date<'2008-08-25';
+Empty set (0.04 sec)
+
+mysql> select * from sales_order_details ;
++----------------+------------------+-----------+-------------+------------------+---------------+------------------+--------------------+-------------+
+| sales_order_no | sales_order_date | client_id | salesman_id | bill_payby_party | delivery_date | new_product_rate | tot_quantity_order | cancle_date |
++----------------+------------------+-----------+-------------+------------------+---------------+------------------+--------------------+-------------+
+| on01003        | 2008-08-12       | cn01005   | s003        | yes              | 2008-08-26    |         2220.400 |                 10 | 0000-00-00  |
+| on01005        | 2008-08-14       | cn01002   | s002        | no               | 2008-08-30    |         2220.400 |                 52 | 2008-08-28  |
+| on01006        | 2008-08-15       | cn01001   | s001        | yes              | 2008-08-31    |         2220.400 |                 53 | 0000-00-00  |
+| on01007        | 2008-01-16       | cn01003   | s004        | yes              | 2008-08-28    |         2220.400 |                 54 | 0000-00-00  |
+| on01008        | 2008-02-01       | cn01004   | s003        | no               | 2008-08-28    |         8220.400 |                 54 | 2008-03-18  |
++----------------+------------------+-----------+-------------+------------------+---------------+------------------+--------------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> update sales_order_details set delivery_date='2008-08-16' where sales_order_no='on01008';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from sales_order_details ;
++----------------+------------------+-----------+-------------+------------------+---------------+------------------+--------------------+-------------+
+| sales_order_no | sales_order_date | client_id | salesman_id | bill_payby_party | delivery_date | new_product_rate | tot_quantity_order | cancle_date |
++----------------+------------------+-----------+-------------+------------------+---------------+------------------+--------------------+-------------+
+| on01003        | 2008-08-12       | cn01005   | s003        | yes              | 2008-08-26    |         2220.400 |                 10 | 0000-00-00  |
+| on01005        | 2008-08-14       | cn01002   | s002        | no               | 2008-08-30    |         2220.400 |                 52 | 2008-08-28  |
+| on01006        | 2008-08-15       | cn01001   | s001        | yes              | 2008-08-31    |         2220.400 |                 53 | 0000-00-00  |
+| on01007        | 2008-01-16       | cn01003   | s004        | yes              | 2008-08-28    |         2220.400 |                 54 | 0000-00-00  |
+| on01008        | 2008-02-01       | cn01004   | s003        | no               | 2008-08-16    |         8220.400 |                 54 | 2008-03-18  |
++----------------+------------------+-----------+-------------+------------------+---------------+------------------+--------------------+-------------+
+5 rows in set (0.01 sec)
+
+mysql> select product_description from product where product_description='hdd1034','dvdrw';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','dvdrw'' at line 1
+mysql> select product_description from product where product_description='hdd1034'and product_description='dvdrw';
+Empty set (0.00 sec)
+
+mysql> select product_description from product where product_description='hdd1034';
++---------------------+
+| product_description |
++---------------------+
+| hdd1034             |
++---------------------+
+1 row in set (0.04 sec)
+
+mysql> select product_description from product where product_description='hdd1034''dvdrw';
+Empty set (0.00 sec)
+
+mysql> select * from client;
++-----------+---------------+------------+----------+--------+---------+----------+
+| client_id | client_name   | address    | city     | pin    | state   | bal_due  |
++-----------+---------------+------------+----------+--------+---------+----------+
+| cn01001   | alak roy      | b.d.para   | amarpur  | 799101 | tripura |  390.900 |
+| cn01002   | suman roy     | puk para   | agartala | 799102 | tripura | 2390.900 |
+| cn01003   | moytree nayak | pachmile   | tezpur   | 799152 | assam   | 9990.900 |
+| cn01004   | priya das     | chora para | kamalpur | 799301 | tripura | 1390.900 |
+| cn01005   | mita mia      | kamal para | singur   | 799721 | tripura |  190.900 |
+| cn01006   | pulak roy     | bircity    | sonitpur | 799141 | assam   |  110.900 |
+| cn01007   | munni das     | nappam     | sonitpur | 799152 | assam   |  190.900 |
+| cn01008   | kusum roy     | city_dos   | tezpur   | 799141 | assam   |  110.900 |
+| cn01009   | mina das      | pachmile   | tezpur   | 799152 | assam   |  190.900 |
+| cn01010   | pauri das     | pachmile   | tezpur   | 799152 | assam   | 2990.900 |
+| cn01011   | manali das    | satmile    | tezpur   | 799154 | assam   | 3990.900 |
++-----------+---------------+------------+----------+--------+---------+----------+
+11 rows in set (0.04 sec)
+
+mysql> select client_name,city from client where state<>'assam';
++-------------+----------+
+| client_name | city     |
++-------------+----------+
+| alak roy    | amarpur  |
+| suman roy   | agartala |
+| priya das   | kamalpur |
+| mita mia    | singur   |
++-------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select sales_order_no from sales_order_details where cancle_date=month(march);
+ERROR 1054 (42S22): Unknown column 'march' in 'where clause'
+mysql> select sales_order_no from sales_order_details where cancle_date=month(03);
+Empty set, 2 warnings (0.01 sec)
+
+mysql> select sales_order_no from sales_order_details where cancle_date=month(3);
+Empty set, 2 warnings (0.00 sec)
+
+mysql>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
