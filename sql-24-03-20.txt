@@ -1,0 +1,255 @@
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 27
+Server version: 8.0.28 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use lab;
+Database changed
+mysql> select * from employee union select * from employee2;
+ERROR 1222 (21000): The used SELECT statements have a different number of columns
+mysql> (select * from employee) union (select * from employee2);
+ERROR 1222 (21000): The used SELECT statements have a different number of columns
+mysql> select * from employee union select * from employee2;
+ERROR 1222 (21000): The used SELECT statements have a different number of columns
+mysql> show tables;
++---------------------+
+| Tables_in_lab       |
++---------------------+
+| client              |
+| employee            |
+| employee2           |
+| product             |
+| sales_order_details |
+| salesman            |
++---------------------+
+6 rows in set (0.01 sec)
+
+mysql> select * from employee ;
++--------+----------+-----------+--------+------------+-----------+
+| emp_no | emp_name | dep       | salary | DOJ        | branch    |
++--------+----------+-----------+--------+------------+-----------+
+| E101   | amit     | oduction  |  45000 | 2000-03-12 | bangalore |
+| E102   | amit     | HR        |  70000 | 2002-07-03 | bangalore |
+| E103   | sunita   | anagremer | 120000 | 2001-01-01 | mysore    |
+| E105   | sunita   | IT        |  67000 | 2001-08-01 | mysore    |
+| E106   | mahesh   | civil     | 145000 | 2003-09-20 | mumbai    |
++--------+----------+-----------+--------+------------+-----------+
+5 rows in set (0.01 sec)
+
+mysql> select * from employee2;
++-------+-----------+-----------+------+------------+---------+---------+--------+
+| empno | ename     | job       | mgr  | hiredate   | sal     | comm    | deptno |
++-------+-----------+-----------+------+------------+---------+---------+--------+
+|  8369 | smith     | clerk     | 8902 | 1990-12-18 |  800.00 |    NULL |     20 |
+|  8499 | anya      | salesman  | 8698 | 1990-02-20 | 1600.00 |  300.00 |     30 |
+|  8521 | seth      | salesman  | 8698 | 1991-02-22 | 1250.00 |  500.00 |     30 |
+|  8566 | mahadevan | manager   | 8639 | 1991-04-02 | 2985.00 |    NULL |     20 |
+|  8654 | momin     | salesman  | 8698 | 1991-09-28 | 1250.00 | 1400.00 |     30 |
+|  8698 | bina      | manager   | 8839 | 1991-05-01 | 2850.00 |    NULL |     30 |
+|  8839 | amir      | president | NULL | 1991-11-18 | 5000.00 |    NULL |     10 |
+|  8844 | kuldeep   | salesman  | 8698 | 1991-09-08 | 1500.00 |    0.00 |     30 |
+|  8882 | shivansh  | manager   | 8839 | 1991-06-09 | 2450.00 |    NULL |     10 |
+|  8888 | scott     | analyst   | 8566 | 1992-12-09 | 3000.00 |    NULL |     20 |
++-------+-----------+-----------+------+------------+---------+---------+--------+
+10 rows in set (0.01 sec)
+
+mysql> select emp_no from employee union select empno from employee2;
++--------+
+| emp_no |
++--------+
+| E101   |
+| E102   |
+| E103   |
+| E105   |
+| E106   |
+| 8369   |
+| 8499   |
+| 8521   |
+| 8566   |
+| 8654   |
+| 8698   |
+| 8839   |
+| 8844   |
+| 8882   |
+| 8888   |
++--------+
+15 rows in set (0.01 sec)
+
+mysql> select emp_no from employee union select empno from employee2;
++--------+
+| emp_no |
++--------+
+| E101   |
+| E102   |
+| E103   |
+| E105   |
+| E106   |
+| 8369   |
+| 8499   |
+| 8521   |
+| 8566   |
+| 8654   |
+| 8698   |
+| 8839   |
+| 8844   |
+| 8882   |
+| 8888   |
++--------+
+15 rows in set (0.00 sec)
+
+mysql> create table employee3;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table employee3 as select emp_no from employee;
+Query OK, 5 rows affected (0.06 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee3;
++--------+
+| emp_no |
++--------+
+| E101   |
+| E102   |
+| E103   |
+| E105   |
+| E106   |
++--------+
+5 rows in set (0.00 sec)
+
+mysql> truncate table employee3;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> select * from employee3;
+Empty set (0.00 sec)
+
+mysql> desc employee3;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| emp_no | varchar(15) | NO   |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+1 row in set (0.01 sec)
+
+mysql> insert into employee select * from employee2;
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into employee select empno from employee2;
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into employee3 select empno from employee2;
+Query OK, 10 rows affected (0.04 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee3;
++--------+
+| emp_no |
++--------+
+| 8369   |
+| 8499   |
+| 8521   |
+| 8566   |
+| 8654   |
+| 8698   |
+| 8839   |
+| 8844   |
+| 8882   |
+| 8888   |
++--------+
+10 rows in set (0.01 sec)
+
+mysql> select emp_no from employee union select empno from employee2;
++--------+
+| emp_no |
++--------+
+| E101   |
+| E102   |
+| E103   |
+| E105   |
+| E106   |
+| 8369   |
+| 8499   |
+| 8521   |
+| 8566   |
+| 8654   |
+| 8698   |
+| 8839   |
+| 8844   |
+| 8882   |
+| 8888   |
++--------+
+15 rows in set (0.04 sec)
+
+mysql> select * from employee;
++--------+----------+-----------+--------+------------+-----------+
+| emp_no | emp_name | dep       | salary | DOJ        | branch    |
++--------+----------+-----------+--------+------------+-----------+
+| E101   | amit     | oduction  |  45000 | 2000-03-12 | bangalore |
+| E102   | amit     | HR        |  70000 | 2002-07-03 | bangalore |
+| E103   | sunita   | anagremer | 120000 | 2001-01-01 | mysore    |
+| E105   | sunita   | IT        |  67000 | 2001-08-01 | mysore    |
+| E106   | mahesh   | civil     | 145000 | 2003-09-20 | mumbai    |
++--------+----------+-----------+--------+------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee2;
++-------+-----------+-----------+------+------------+---------+---------+--------+
+| empno | ename     | job       | mgr  | hiredate   | sal     | comm    | deptno |
++-------+-----------+-----------+------+------------+---------+---------+--------+
+|  8369 | smith     | clerk     | 8902 | 1990-12-18 |  800.00 |    NULL |     20 |
+|  8499 | anya      | salesman  | 8698 | 1990-02-20 | 1600.00 |  300.00 |     30 |
+|  8521 | seth      | salesman  | 8698 | 1991-02-22 | 1250.00 |  500.00 |     30 |
+|  8566 | mahadevan | manager   | 8639 | 1991-04-02 | 2985.00 |    NULL |     20 |
+|  8654 | momin     | salesman  | 8698 | 1991-09-28 | 1250.00 | 1400.00 |     30 |
+|  8698 | bina      | manager   | 8839 | 1991-05-01 | 2850.00 |    NULL |     30 |
+|  8839 | amir      | president | NULL | 1991-11-18 | 5000.00 |    NULL |     10 |
+|  8844 | kuldeep   | salesman  | 8698 | 1991-09-08 | 1500.00 |    0.00 |     30 |
+|  8882 | shivansh  | manager   | 8839 | 1991-06-09 | 2450.00 |    NULL |     10 |
+|  8888 | scott     | analyst   | 8566 | 1992-12-09 | 3000.00 |    NULL |     20 |
++-------+-----------+-----------+------+------------+---------+---------+--------+
+10 rows in set (0.00 sec)
+
+mysql> select ename from employee2 where exists (select emp_name from employee where ename='amit');
+Empty set (0.01 sec)
+
+mysql> select ename from employee2 where exists (select emp_name from employee where emp_name='amit');
++-----------+
+| ename     |
++-----------+
+| smith     |
+| anya      |
+| seth      |
+| mahadevan |
+| momin     |
+| bina      |
+| amir      |
+| kuldeep   |
+| shivansh  |
+| scott     |
++-----------+
+10 rows in set (0.00 sec)
+
+mysql> select ename from employee2 where ename='smith' and exists (select emp_name from employee where emp_name='amit');
++-------+
+| ename |
++-------+
+| smith |
++-------+
+1 row in set (0.00 sec)
+
+mysql> select ename from employee2 where ename='smith' and some (select emp_name from employee where emp_name='amit');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(select emp_name from employee where emp_name='amit')' at line 1
+mysql> select ename from employee2 where ename='smith' and emp_name=some(select emp_name from employee where emp_name='amit');
+ERROR 1054 (42S22): Unknown column 'emp_name' in 'IN/ALL/ANY subquery'
+mysql> select ename from employee2 where ename='smith' and emp_name=some(select emp_name from employee where emp_no='E101');
+ERROR 1054 (42S22): Unknown column 'emp_name' in 'IN/ALL/ANY subquery'
+mysql> select ename from employee2 where emp_name=some(select emp_name from employee where emp_no='E101');
+ERROR 1054 (42S22): Unknown column 'emp_name' in 'IN/ALL/ANY subquery'
+mysql> select ename from employee2 where ename=some(select emp_name from employee where emp_no='E101');
+Empty set (0.00 sec)
+
+mysql>
